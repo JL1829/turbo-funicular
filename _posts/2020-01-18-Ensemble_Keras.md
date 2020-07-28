@@ -1,7 +1,9 @@
 ---
 toc: true
+layout: post
 description: A tutorial of how to use Ensemble Method to stack multiple classifier.
 categories: [Ensemble]
+title: How to develop a Stacking Ensemble for Deep Learning Neural Networks in Python with Keras
 comments: true
 ---
 

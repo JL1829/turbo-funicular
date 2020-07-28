@@ -1,7 +1,9 @@
 ---
 toc: true
+layout: post
 description: Footnote of Math for Machine Learning.
 categories: [math]
+title: Machine Learning Mathematical Foundation
 comments: true
 ---
 
