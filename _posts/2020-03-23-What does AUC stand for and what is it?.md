@@ -1,7 +1,9 @@
 ---
 toc: true
+layout: post
 description: A note to clarify the defination
 categories: [Machine Learning]
+title: What does AUC stand for and what is it?
 comments: true
 ---
 

@@ -1,7 +1,9 @@
 ---
 toc: true
+layout: post
 description: Some example of Git branch develop standard coder should follow
 categories: [git]
+title: The Git branches developing standard you should know
 comments: true
 ---
 
