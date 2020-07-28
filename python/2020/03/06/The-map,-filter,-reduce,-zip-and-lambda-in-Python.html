@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>The map(), filter(), reduce(), zip() and Lambda() funcion in Python | Johnny’s Machine Learning Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="The map(), filter(), reduce(), zip() and Lambda() funcion in Python" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Some straightforward example to explain the function’s glegance" />
+<meta property="og:description" content="Some straightforward example to explain the function’s glegance" />
+<link rel="canonical" href="https://jl1829.github.io/turbo-funicular/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html" />
+<meta property="og:url" content="https://jl1829.github.io/turbo-funicular/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html" />
+<meta property="og:site_name" content="Johnny’s Machine Learning Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-06T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"Some straightforward example to explain the function’s glegance","@type":"BlogPosting","headline":"The map(), filter(), reduce(), zip() and Lambda() funcion in Python","dateModified":"2020-03-06T00:00:00-06:00","datePublished":"2020-03-06T00:00:00-06:00","url":"https://jl1829.github.io/turbo-funicular/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://jl1829.github.io/turbo-funicular/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/turbo-funicular/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://jl1829.github.io/turbo-funicular/feed.xml" title="Johnny's Machine Learning Blog" /><link rel="shortcut icon" type="image/x-icon" href="/turbo-funicular/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>The map(), filter(), reduce(), zip() and Lambda() funcion in Python | Johnny’s Machine Learning Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="The map(), filter(), reduce(), zip() and Lambda() funcion in Python" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Some straightforward example to explain the function’s glegance" />
+<meta property="og:description" content="Some straightforward example to explain the function’s glegance" />
+<link rel="canonical" href="https://jl1829.github.io/turbo-funicular/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html" />
+<meta property="og:url" content="https://jl1829.github.io/turbo-funicular/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html" />
+<meta property="og:site_name" content="Johnny’s Machine Learning Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-06T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"Some straightforward example to explain the function’s glegance","@type":"BlogPosting","headline":"The map(), filter(), reduce(), zip() and Lambda() funcion in Python","dateModified":"2020-03-06T00:00:00-06:00","datePublished":"2020-03-06T00:00:00-06:00","url":"https://jl1829.github.io/turbo-funicular/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://jl1829.github.io/turbo-funicular/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://jl1829.github.io/turbo-funicular/feed.xml" title="Johnny's Machine Learning Blog" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/turbo-funicular/">Johnny&#39;s Machine Learning Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/turbo-funicular/about/">About Me</a><a class="page-link" href="/turbo-funicular/search/">Search</a><a class="page-link" href="/turbo-funicular/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">The map(), filter(), reduce(), zip() and Lambda() funcion in Python</h1><p class="page-description">Some straightforward example to explain the function's glegance</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-03-06T00:00:00-06:00" itemprop="datePublished">
+        Mar 6, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      12 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/turbo-funicular/categories/#Python">Python</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/JL1829/turbo-funicular/tree/master/_notebooks/2020-03-06-The map, filter, reduce, zip and lambda in Python.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/turbo-funicular/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/JL1829/turbo-funicular/master?filepath=_notebooks%2F2020-03-06-The+map%2C+filter%2C+reduce%2C+zip+and+lambda+in+Python.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/turbo-funicular/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/JL1829/turbo-funicular/blob/master/_notebooks/2020-03-06-The map, filter, reduce, zip and lambda in Python.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/turbo-funicular/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#About">About </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#map()">map() </a></li>
+<li class="toc-entry toc-h2"><a href="#filter()">filter() </a></li>
+<li class="toc-entry toc-h2"><a href="#Reduce()">Reduce() </a></li>
+<li class="toc-entry toc-h2"><a href="#zip()">zip() </a></li>
+<li class="toc-entry toc-h2"><a href="#lambda()">lambda() </a></li>
+<li class="toc-entry toc-h2"><a href="#Scenario-that-fit-lambda">Scenario that fit lambda </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-03-06-The map, filter, reduce, zip and lambda in Python.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="About">
+<a class="anchor" href="#About" aria-hidden="true"><span class="octicon octicon-link"></span></a>About<a class="anchor-link" href="#About"> </a>
+</h1>
+<p>Today I would like to share some straightforward example of these important built-in functions in Python:</p>
+<ul>
+<li><a href="https://docs.python.org/3.7/library/functions.html#map">map</a></li>
+<li><a href="https://docs.python.org/3.7/library/functions.html#filter">filter</a></li>
+<li><a href="https://docs.python.org/3.7/library/functools.html">reduce</a></li>
+<li><a href="https://docs.python.org/3.7/library/functions.html#zip">zip</a></li>
+<li>
+<a href="https://docs.python.org/3.7/tutorial/controlflow.html">lambda</a> </li>
+</ul>
+<p>They are some convenient function for us to deal with sequences, benefited by the world of functional programming, we can apply this functions into every single elements of a sequances, in order to reduce the time of explicit Loop. 
+What's more, all this functions are pure function, both have return value, we can use this return value to repersent our expression.</p>
+<p>So in layman term, why to use them is it cam much simplify our code, to execute those loop and iteration mission in a simple, elegance and efficient way.</p>
+<h2 id="map()">
+<a class="anchor" href="#map()" aria-hidden="true"><span class="octicon octicon-link"></span></a>map()<a class="anchor-link" href="#map()"> </a>
+</h2>
+<p>The map() function is going to return an iterator that applies function to every item of iterable, yielding the results. Such as <code>list</code> we can check whether an object have <code>iterable</code> attribute by using <code>hasattr</code> such as:</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="o">&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">'__iter__'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kc">True</span>
+</pre></div>
+<ul>
+<li>map() function simple syntex:<code>map(func, iterable)</code>* parameter: <code>func</code> is an function that <code>map()</code> pass to the every elements in the <code>iterable</code> object, the <code>iterable</code> is an object that has <code>__iter__</code> attribute, so every elements can execute the <code>func</code>
+</li>
+<li>return value: a <code>map</code> object</li>
+</ul>
+<p>Sounds like complicated? let's see an example:
+Assume we have a <code>list</code> that contain 1 - 5 digits, we want to every number add 1, before <code>map()</code> function, most likely we will do this:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">numbers</span><span class="p">)):</span>
+    <span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[2, 3, 4, 5, 6]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Or, in another way:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="c1"># create empty list</span>
+<span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[2, 3, 4, 5, 6]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Obviously, no matter in which way, we all need to handle loop, so, we can try to use <code>map()</code> function:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">add_one</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span>
+
+<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">add_one</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;map object at 0x10a3c7150&gt;
+&lt;class 'map'&gt;
+[2, 3, 4, 5, 6]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I believe you already notice the beauty of <code>map()</code>, we have achieved our purpose by not using loop, meanwhile, the code written in an elegent and simplicity way. 
+So the <code>map()</code> function will return a <code>map</code> object if we planning to use this object in the future, this object type will help us to save the memory utilization, we use the <code>getsizeof()</code> function from <code>sys</code> to see the memory utilization of each object, <code>map</code> object and <code>list</code></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">getsizeof</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'The size of map object in memory is </span><span class="si">{</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="si">}</span><span class="s1"> bytes'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Convert it into list: </span><span class="si">{</span><span class="n">getsizeof</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">result</span><span class="p">))</span><span class="si">}</span><span class="s1"> bytes'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The size of map object in memory is 64 bytes
+Convert it into list: 72 bytes
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The requirement of object to passed in <code>map()</code> function is <code>iterable</code> so as long as the object has attribute of <code>__iter__</code> it works, not only <code>list</code>, but also <code>tuple</code>, such as:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Is tuple numbers iterable? Answer: </span><span class="si">{</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="s1">'__iter__'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">add_one</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Is tuple numbers iterable? Answer: True
+&lt;map object at 0x109bb9410&gt;
+&lt;class 'map'&gt;
+(2, 3, 4, 5, 6)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Have you notice in order to achieved this, we need to create a function called <code>add_one(n)</code>? and it just simply return <code>n+1</code>, possible to reduce this? to make the code more simply and elegent? Yes, we can use <code>lambda</code></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(2, 3, 4, 5, 6)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Three lines of code, simple, elegent, Pythonic</p>
+<p>Beside using defined function or <code>lambda</code> function to execute the iterable, we also can utilize Python bulit-in function, bulit-in type to execute the iterable, such this case:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># list of strings</span>
+<span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Singapore'</span><span class="p">,</span> <span class="s1">'Guangzhou'</span><span class="p">,</span> <span class="s1">'Tokyo'</span><span class="p">]</span>
+
+<span class="c1"># convert every elements in the array into List</span>
+<span class="n">converted</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">words</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">converted</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The type of converted: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">converted</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The lenght of converted: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">converted</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[['S', 'i', 'n', 'g', 'a', 'p', 'o', 'r', 'e'], ['G', 'u', 'a', 'n', 'g', 'z', 'h', 'o', 'u'], ['T', 'o', 'k', 'y', 'o']]
+The type of converted: &lt;class 'list'&gt;
+The lenght of converted: 3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>words</code> is a list that contain <code>string</code> type of elements, we can use <code>map()</code> and Python bulit-in <code>list</code> to convert every elements in <code>words</code> into List, but do take note, every elements must have <code>__iter__</code> attribute, otherwise, it will raise <code>TypeError</code>, such as <code>int</code> type:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s1">'23'</span><span class="p">,</span> <span class="mi">42</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-14-58446c133a68&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> numbers <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">3</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'23'</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">42</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>print<span class="ansi-blue-fg">(</span>list<span class="ansi-blue-fg">(</span>map<span class="ansi-blue-fg">(</span>list<span class="ansi-blue-fg">,</span> numbers<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">TypeError</span>: 'int' object is not iterable</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see: <code>TypeError</code>, <code>int</code> object is not iterable, we can avoid it by this way:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s1">'23'</span><span class="p">,</span> <span class="mi">42</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[3.0, 23.0, 42.0]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="filter()">
+<a class="anchor" href="#filter()" aria-hidden="true"><span class="octicon octicon-link"></span></a>filter()<a class="anchor-link" href="#filter()"> </a>
+</h2>
+<p><code>filter()</code> function is using a function to "filter" the sequence, the function is going to examinate every elements in the sequence is <code>True</code> or <code>False</code></p>
+<ul>
+<li>
+<code>filter()</code> syntex: <code>filter(func, iterable)</code>
+</li>
+<li>Parameter: <code>func</code> test iterable sequances' elements is <code>True</code> or <code>False</code>, <code>iterable</code> is the iterable sequances that been filter</li>
+<li>Return value: an iterable sequance that every elements is <code>True</code> to the filter function <code>func</code>
+</li>
+</ul>
+<p>Layman term: <code>filter()</code> is to filter a set of data based on the given conditions</p>
+<p>Example:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># filter vowel</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
+    <span class="n">letters</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'e'</span><span class="p">,</span> <span class="s1">'i'</span><span class="p">,</span> <span class="s1">'o'</span><span class="p">,</span> <span class="s1">'u'</span><span class="p">]</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">variable</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">letters</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1"># given sequance</span>
+<span class="n">sequance</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'I'</span><span class="p">,</span> <span class="s1">'l'</span><span class="p">,</span> <span class="s1">'o'</span><span class="p">,</span> <span class="s1">'v'</span><span class="p">,</span> <span class="s1">'e'</span><span class="p">,</span> <span class="s1">'p'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">,</span> <span class="s1">'t'</span><span class="p">,</span> <span class="s1">'h'</span><span class="p">,</span> <span class="s1">'o'</span><span class="p">,</span> <span class="s1">'n'</span><span class="p">]</span>
+
+<span class="n">filtered</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">sequance</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The vowel in the sequance is </span><span class="si">{</span><span class="n">filtered</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The vowel in the sequance is ['I', 'o', 'e', 'o']
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Above we create a method to pull the vowel from a given sequance, the given sequance is <code>List</code>, so it have <code>'__iter__'</code>, and apply it to <code>filter()</code> to pull out the vowel.</p>
+<p>Here we have another example:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># positive or negitive number</span>
+<span class="k">def</span> <span class="nf">positive</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1"># odd or even number</span>
+<span class="k">def</span> <span class="nf">even_number</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="n">positive_number</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">positive</span><span class="p">,</span> <span class="n">numbers</span><span class="p">))</span>
+<span class="n">even_number</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">even_number</span><span class="p">,</span> <span class="n">numbers</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The positive number is: </span><span class="si">{</span><span class="n">positive_number</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The even number is </span><span class="si">{</span><span class="n">even_number</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The positive number is: [1, 5, 9, 12].
+The even number is [-20, 0, 12].
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So, how to use <code>filter()</code> function is quite simple:</p>
+<ol>
+<li>define a method that can filter out <code>True</code> or <code>False</code>
+</li>
+<li>apply it to iterable object</li>
+<li>Integrate it into your bigger code block</li>
+</ol>
+<p>Now let's see how to use <code>lambda</code> together:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">42</span><span class="p">]</span>
+
+<span class="c1"># odd number</span>
+<span class="n">odd_number</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The odd number is </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">odd_number</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+
+<span class="c1"># even number</span>
+<span class="n">even_number</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The even number is </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">even_number</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+
+<span class="c1"># positive number</span>
+<span class="n">positive_number</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The positive number is </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">positive_number</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The odd number is [1, -3, 5].
+The even number is [0, 2, -8, 42].
+The positive number is [1, 2, 5, 42].
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Always remember the Python philosophy： efficient, simple, elegent</p>
+<h2 id="Reduce()">
+<a class="anchor" href="#Reduce()" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reduce()<a class="anchor-link" href="#Reduce()"> </a>
+</h2>
+<p><code>reduce()</code> is very useful built-in function, it can execuate iterable object's compuatation and return the result, it can rolling compute the continues values in an iterable sequance, such as cumulative product of integer list, or cumulative sum.</p>
+<ul>
+<li>Syntex: <code>reduce(func, iterable)</code>
+</li>
+<li>Parameter: <code>func</code>: a continues method to execuate on each element of the iterable object, last resut is the new parameter of next execuation. </li>
+<li>Return value: the <code>func</code> return value</li>
+</ul>
+<p>In Python 3, <code>reduce()</code> moved to <code>functools</code> module, so before we use it, we need to <code>import</code> it from <code>functools</code></p>
+<p>Example:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+
+<span class="k">def</span> <span class="nf">do_sum</span><span class="p">(</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">num1</span> <span class="o">+</span> <span class="n">num2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The sum of 1, 2, 3, 4 is: </span><span class="si">{</span><span class="n">reduce</span><span class="p">(</span><span class="n">do_sum</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The sum of 1, 2, 3, 4 is: 10.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># cumulative product example</span>
+
+<span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">num1</span><span class="o">*</span><span class="n">num2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The cumulative product of 1, 2, 3, 4 is: </span><span class="si">{</span><span class="n">reduce</span><span class="p">(</span><span class="n">multiply</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The cumulative product of 1, 2, 3, 4 is: 24.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># more simple and elegent way with lambda</span>
+<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+
+<span class="n">result_multiply</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="n">result_sum</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The cumulative product of 1, 2, 3, 4 is: </span><span class="si">{</span><span class="n">result_multiply</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The cumulative sum of 1, 2, 3, 4 is: </span><span class="si">{</span><span class="n">result_sum</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The cumulative product of 1, 2, 3, 4 is: 24
+The cumulative sum of 1, 2, 3, 4 is: 10.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="zip()">
+<a class="anchor" href="#zip()" aria-hidden="true"><span class="octicon octicon-link"></span></a>zip()<a class="anchor-link" href="#zip()"> </a>
+</h2>
+<p>As it's name, <code>zip()</code> function is to put multiple <code>iterable</code> object together, and "packed" it as one single object, mapping with similar index.</p>
+<ul>
+<li>Syntex: <code>zip(*iterators)</code>
+</li>
+<li>Parameter: <code>iterators</code> is <code>iterable</code> object, such as <code>List</code>, <code>String</code>
+</li>
+<li>Return value: Single iterator object, containing index value from the packed object. </li>
+</ul>
+<p>Example:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'name'</span><span class="p">,</span> <span class="s1">'age'</span><span class="p">]</span>
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Apple'</span><span class="p">,</span> <span class="s1">'44'</span><span class="p">]</span>
+
+<span class="n">apple_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">apple_dict</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{'name': 'Apple', 'age': '44'}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>zip()</code> it also support multiple objects:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Apple'</span><span class="p">,</span> <span class="s1">'Google'</span><span class="p">,</span> <span class="s1">'Microsoft'</span><span class="p">]</span>
+<span class="n">ages</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'44'</span><span class="p">,</span> <span class="s1">'21'</span><span class="p">,</span> <span class="s1">'44'</span><span class="p">]</span>
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'100'</span><span class="p">,</span> <span class="s1">'80'</span><span class="p">,</span> <span class="s1">'60'</span><span class="p">]</span>
+
+<span class="n">mapped_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">ages</span><span class="p">,</span> <span class="n">values</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mapped_values</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[('Apple', '44', '100'), ('Google', '21', '80'), ('Microsoft', '44', '60')]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can use the <code>zip()</code> function to easily packed the values have same index from 3 list</p>
+<p>But how about unpack?</p>
+<p>Simple, just similar to unpanc tuple, we add the <code>*</code> to the object that we want to unpack</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">names</span><span class="p">,</span> <span class="n">ages</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">mapped_values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The names is </span><span class="si">{</span><span class="n">names</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The ages is </span><span class="si">{</span><span class="n">ages</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The values is </span><span class="si">{</span><span class="n">values</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The names is ('Apple', 'Google', 'Microsoft')
+The ages is ('44', '21', '44')
+The values is ('100', '80', '60')
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="lambda()">
+<a class="anchor" href="#lambda()" aria-hidden="true"><span class="octicon octicon-link"></span></a>lambda()<a class="anchor-link" href="#lambda()"> </a>
+</h2>
+<p>While normal functions are defined using the <code>def</code> keyword, in Python anonymous functions are defined using the <code>lambda</code> keyword. Hence, anonymous functions are also called lambda functions.</p>
+<blockquote>
+<p><code>Lambda</code> function can use any quantity of parameter, but only have one expression</p>
+</blockquote>
+<ul>
+<li>Syntex:lambda argument: manipulate(argument)* Parameter: argument is the passing parameter, after the <code>:</code> is the manipulate</li>
+</ul>
+<p>Example:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">add_one</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span>
+<span class="n">add_sum</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">add_one</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">add_sum</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>3
+10
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Normally we will not use <code>lambda</code> function individually, we will use it along with other built-in function or <code>def</code> function, which we have already shows above, use it along with <code>map()</code>, <code>filter()</code>, <code>reduce()</code> and <code>zip()</code> function.</p>
+<p>Let's see one more example of <code>lambda</code> interacting with <code>dict</code></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">university</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">'name'</span><span class="p">:</span> <span class="s1">'NYU'</span><span class="p">,</span> 
+               <span class="s1">'city'</span><span class="p">:</span> <span class="s1">'New York'</span><span class="p">},</span> 
+              <span class="p">{</span><span class="s1">'name'</span><span class="p">:</span> <span class="s1">'NUS'</span><span class="p">,</span> 
+               <span class="s1">'city'</span><span class="p">:</span> <span class="s2">"Singapore"</span><span class="p">}]</span>
+
+<span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">'name'</span><span class="p">],</span> <span class="n">university</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>['NYU', 'NUS']
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Above we interacting with <code>dict</code> with <code>map()</code> function, given the condition for the iterable <code>list</code> of <code>dict</code> that contain the <code>name</code> and the <code>city</code> of each University</p>
+<p>We also can interacting <code>dict</code> with <code>filter()</code> function, through the return value <code>True</code> or <code>False</code> to judge the filtering condition.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">university</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">'name'</span><span class="p">:</span> <span class="s1">'NYU'</span><span class="p">,</span> 
+               <span class="s1">'city'</span><span class="p">:</span> <span class="s1">'New York'</span><span class="p">},</span> 
+              <span class="p">{</span><span class="s1">'name'</span><span class="p">:</span> <span class="s1">'NUS'</span><span class="p">,</span> 
+               <span class="s1">'city'</span><span class="p">:</span> <span class="s2">"Singapore"</span><span class="p">}]</span>
+
+<span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'NUS'</span><span class="p">,</span> <span class="n">university</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[{'name': 'NUS', 'city': 'Singapore'}]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Through the above example, you have seen the actual application scenario of <code>lambda</code>, but here I want to share my views with you: I think that the disadvantages of <code>lambda</code> are slightly more than the advantages, and you should avoid overusing <code>lambda</code>.</p>
+<p>First of all, this is just my personal opinion. I hope everyone understands why I said this. First, let's compare the <code>lambda</code> method with the conventional <code>def</code>. I find that the main differences between <code>lambda</code> and <code>def</code> are as follows:</p>
+<ul>
+<li>Passing the parameter immediately(no need to define variable).</li>
+<li>one line of code, very simple (but, it doesn't mean is efficient).</li>
+<li>Automatically return, no need <code>return</code> keyword.</li>
+<li>
+<code>lambda</code> function DO NOT have a function name</li>
+</ul>
+<p>You can see the advantages. I mainly want to talk about its disadvantages. First of all, starting from real needs, we don’t need <code>lambda</code> most of the time, because we can always find better alternatives. Now let ’s take a look In the example of <code>lambda</code> + <code>reduce()</code>, the result we achieved with <code>lambada</code> is as follows:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>          
+<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">result_multiply</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">((</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">),</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="n">result_add</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">((</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">),</span> <span class="n">numbers</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Above example, the <code>lambda</code> didn't achieved the simple and efficient purpose, as we have the bulit-in <code>sum</code> and <code>mul</code> method, even it can work with <code>NumPy</code> also</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">result_sum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+<span class="n">result_multiply</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The sum is </span><span class="si">{</span><span class="n">result_sum</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The cumulative product is: </span><span class="si">{</span><span class="n">result_multiply</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">matrixA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">matrixB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">matrixList</span> <span class="o">=</span> <span class="p">[</span><span class="n">matrixA</span><span class="p">,</span> <span class="n">matrixB</span><span class="p">]</span>
+
+<span class="n">mulmat</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">matrixList</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The Matrix Multipication is </span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">mulmat</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The sum is 10
+The cumulative product is: 24
+The Matrix Multipication is 
+ [[-2.09128347 -0.96279072 -1.81723096]
+ [-1.26743106  0.45465535  0.47941216]
+ [-0.36291425 -0.02198572 -0.52437492]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The result is the same, but obviously the solution using <code>sum</code> and <code>mul</code> is more efficient. Another common example shows that if we have a <code>list</code> that stores various colors, we now need to capitalize the first letter of each color. If we write it in lambda:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'red'</span><span class="p">,</span><span class="s1">'purple'</span><span class="p">,</span><span class="s1">'green'</span><span class="p">,</span><span class="s1">'blue'</span><span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span><span class="n">c</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span><span class="n">colors</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>['Red', 'Purple', 'Green', 'Blue']
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Seems ok, but, did we forgot the power of <code>List</code> ?</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'red'</span><span class="p">,</span><span class="s1">'purple'</span><span class="p">,</span><span class="s1">'green'</span><span class="p">,</span><span class="s1">'blue'</span><span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">colors</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>['Red', 'Purple', 'Green', 'Blue']
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>Sorted</code> can also handle the case of irregular initials, saving even more time:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Red'</span><span class="p">,</span><span class="s1">'purple'</span><span class="p">,</span><span class="s1">'Green'</span><span class="p">,</span><span class="s1">'blue'</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">capitalize</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>['blue', 'Green', 'purple', 'Red']
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There is another reason: <code>lambda</code> functions do not have function names. So in the case of code transfer and project migration, it will bring a lot of difficulties to the team. It is not bad to write a function <code>add_one()</code>, because everyone is easy to understand and know that it is a function of performing <code>+1</code>, but if you are in the team, use a lots of <code>lambda</code> will make peoples confused.</p>
+<h2 id="Scenario-that-fit-lambda">
+<a class="anchor" href="#Scenario-that-fit-lambda" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scenario that fit lambda<a class="anchor-link" href="#Scenario-that-fit-lambda"> </a>
+</h2>
+<ol>
+<li>Your method is too simple to have a name, such as adding 1, or just stiching the strings</li>
+<li>Using <code>lambda</code> is much easier for people to understand</li>
+<li>There's no any Python built-in function except <code>lambda</code>
+</li>
+<li>Team members are all well understand <code>lambda</code>, most importantly, no one complain you. </li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="JL1829/turbo-funicular"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/turbo-funicular/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/turbo-funicular/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/turbo-funicular/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/turbo-funicular/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/JL1829" title="JL1829"><svg class="svg-icon grey"><use xlink:href="/turbo-funicular/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/JALC1829" title="JALC1829"><svg class="svg-icon grey"><use xlink:href="/turbo-funicular/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
