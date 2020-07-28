@@ -1,1 +1,1 @@
-Sitemap: https://jl1829.github.io/turbo-funicular/sitemap.xml
+Sitemap: https://johdev.com/sitemap.xml
