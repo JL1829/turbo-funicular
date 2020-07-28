@@ -1,0 +1,132 @@
+<h1 id="the-git-branches-developing-standard-you-should-know">The Git branches developing standard you should know</h1>
+
+<p><img src="/images/git.png" alt="git" /></p>
+
+<p>Git is by far the most popular source code management tool. In order to standardize development, keep the code commit record and git branch structure clear, and facilitate subsequent maintenance. Coder should bear in mind there’s some specification of branch naming, commit messages formating, and what &amp; when to merge different branches. 
+In this blog, we are going to talk about the following topic:</p>
+
+<ul>
+  <li>Branch Mangement
+    <ul>
+      <li>Naming convention</li>
+      <li>Routine Task</li>
+    </ul>
+  </li>
+  <li>Message Specification
+    <ul>
+      <li>Commit messages</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="branch-management">Branch Management</h2>
+<h3 id="branch-naming">Branch Naming</h3>
+<h4 id="master-branch">Master Branch</h4>
+<ul>
+  <li><code class="highlighter-rouge">master</code> is the major branch, it’s also the production deployment branch, stablity is the uppermost important.</li>
+  <li>Normally <code class="highlighter-rouge">master</code> branch is merged by <code class="highlighter-rouge">develop</code> and <code class="highlighter-rouge">hotfix</code> branch, modfying code directly into the <code class="highlighter-rouge">master</code> branch is not allowed at all time.</li>
+</ul>
+
+<h4 id="develop-branch">Develop branch</h4>
+<ul>
+  <li><code class="highlighter-rouge">develop</code> branch is the branch for further developing, keep updated all the time and merging the code when bugs was fixed.</li>
+  <li>When developing some new feature, there will be a <code class="highlighter-rouge">feature</code> branch breakout from <code class="highlighter-rouge">develop</code> branch in order to provide a “clean” environment for new feature developing.</li>
+</ul>
+
+<h4 id="feature-branch">Feature branch</h4>
+<ul>
+  <li>Based on <code class="highlighter-rouge">develop</code> branch, create <code class="highlighter-rouge">feature</code> branch</li>
+  <li>Naming: different features is named after the <code class="highlighter-rouge">feature/</code>, such as <code class="highlighter-rouge">feature/preprocessing_module</code>, <code class="highlighter-rouge">feature/unsupervised_module</code></li>
+</ul>
+
+<h4 id="release-branch">Release branch</h4>
+<ul>
+  <li>Release is a pre-launch branch. During the release and testing phase, the release branch code is used as a benchmark for testing.</li>
+</ul>
+
+<blockquote>
+  <p>When a group of feature development is completed, it will first be merged into the develop branch. When entering the test, a release branch will be created.</p>
+
+  <p>If there are bugs that need to be fixed during the test, the developers will fix and submit them directly in the release branch.</p>
+
+  <p>After the test is completed, merge the release branch into the master and develop branches. At this time, the master is the latest code and is used for going online.</p>
+</blockquote>
+
+<h4 id="hotfix-branch">Hotfix branch</h4>
+<ul>
+  <li>Branch naming: Started with <code class="highlighter-rouge">hotfix/</code>, and its naming rules are similar to feature branches, it build for bug fixing.</li>
+  <li>When there’s emergency, the bug need to be fixed in time. Use the <code class="highlighter-rouge">master</code> branch as the baseline and create a <code class="highlighter-rouge">hotfix</code> branch. After the debug is completed, it need to be merged it into the <code class="highlighter-rouge">master</code> branch and <code class="highlighter-rouge">develop</code> branch.</li>
+</ul>
+
+<h3 id="routine-task">Routine Task</h3>
+<h4 id="new-function-developing">New Function developing</h4>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>dev<span class="o">)</span><span class="nv">$:</span> git checkout <span class="nt">-b</span> feature/xxx            <span class="c"># create feature from dev</span>
+<span class="o">(</span>feature/xxx<span class="o">)</span><span class="nv">$:</span> vi nlp_train.py                <span class="c"># develop</span>
+<span class="o">(</span>feature/xxx<span class="o">)</span><span class="nv">$:</span> git add xxx
+<span class="o">(</span>feature/xxx<span class="o">)</span><span class="nv">$:</span> git commit <span class="nt">-m</span> <span class="s1">'commit comment'</span>
+<span class="o">(</span>dev<span class="o">)</span><span class="nv">$:</span> git merge feature/xxx <span class="nt">--no-ff</span>          <span class="c"># merge feature into dev</span>
+</code></pre></div></div>
+
+<h4 id="bug-fix">Bug fix</h4>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>master<span class="o">)</span><span class="nv">$:</span> git checkout <span class="nt">-b</span> hotfix/xxx         <span class="c"># create hotfix from master</span>
+<span class="o">(</span>hotfix/xxx<span class="o">)</span><span class="nv">$:</span> vi nlp_train.py                <span class="c"># bug fix</span>
+<span class="o">(</span>hotfix/xxx<span class="o">)</span><span class="nv">$:</span> git add xxx
+<span class="o">(</span>hotfix/xxx<span class="o">)</span><span class="nv">$:</span> git commit <span class="nt">-m</span> <span class="s1">'commit comment'</span>
+<span class="o">(</span>master<span class="o">)</span><span class="nv">$:</span> git merge hotfix/xxx <span class="nt">--no-ff</span>       <span class="c"># merge hotfix into master</span>
+<span class="o">(</span>dev<span class="o">)</span><span class="nv">$:</span> git merge hotfix/xxx <span class="nt">--no-ff</span>          <span class="c"># merge hotfix into dev</span>
+</code></pre></div></div>
+
+<h4 id="testing">Testing</h4>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>release<span class="o">)</span><span class="nv">$:</span> git merge dev <span class="nt">--no-ff</span>             <span class="c"># merge dev into release</span>
+</code></pre></div></div>
+
+<h4 id="bring-it-into-production">Bring it into production</h4>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>master<span class="o">)</span><span class="nv">$:</span> git merge release <span class="nt">--no-ff</span>          <span class="c"># merge release into master</span>
+<span class="o">(</span>master<span class="o">)</span><span class="nv">$:</span> git tag <span class="nt">-a</span> v0.1 <span class="nt">-m</span> <span class="s1">'Version name'</span>  <span class="c"># name the version and tag</span>
+</code></pre></div></div>
+
+<p>Above process in one picture
+<img src="/images/branches.jpg" alt="branches" /></p>
+
+<h2 id="message-specification">Message Specification</h2>
+<blockquote>
+  <p>In a team collaboration project, developers often need to submit some code to fix bugs or implement new features. The files in the project, what functions are implemented, and what problems are solved are gradually forgotten, and finally you need to waste time reading the code. But writing good formatting commit messages helps us, and it also reflects whether a developer is a good collaborator.</p>
+</blockquote>
+
+<p><strong>A good formatting commit messages can have this benefits:</strong></p>
+<ul>
+  <li>Speed up the review process</li>
+  <li>Help the team to write up Release Note</li>
+  <li>Let the team know what and why this features were added and how the bugs were fixed.</li>
+</ul>
+
+<p>Currently there’s different version of commit messages, the <strong>Angular</strong> is the most accepted version, such as: 
+<img src="/images/commit_messages.jpg" alt="commit_messages" /></p>
+
+<h3 id="commit-messages-format">Commit messages format</h3>
+<p>Please refer to <a href="https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines">Angular Git Commit Guidelines</a></p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;<span class="nb">type</span><span class="o">&gt;</span>: &lt;subject&gt;
+&lt;BLANK LINE&gt;
+&lt;body&gt;
+&lt;BLANK LINE&gt;
+&lt;footer&gt;
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Type</strong>: what’s the type of this commit, is <code class="highlighter-rouge">bugfix</code> or <code class="highlighter-rouge">docs</code> or <code class="highlighter-rouge">style</code> etc.</li>
+  <li><strong>Scope</strong>: the affecting range of this commit.</li>
+  <li><strong>Subject</strong>: Describe the main idea of this commit.</li>
+  <li><strong>Body</strong>: Detail explaination of this commit, such as motivation of this commit</li>
+  <li><strong>Footer</strong>: Is there any related issue or break change?</li>
+</ul>
+
+<h4 id="different-types">Different Types:</h4>
+<ul>
+  <li><strong>feat</strong>: New Features</li>
+  <li><strong>fix</strong>: Bug fix</li>
+  <li><strong>docs</strong>: Documentation modification</li>
+  <li><strong>style</strong>: Changing coding style, such as whitespace, indentation.</li>
+  <li><strong>refactor</strong>: Refactor the code, but did not change the logic</li>
+  <li><strong>perf</strong>: adding some new code for performance test</li>
+  <li><strong>test</strong>: Adding test code</li>
+</ul>

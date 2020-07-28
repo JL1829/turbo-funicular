@@ -1,0 +1,69 @@
+<h1 id="what-does-auc-stand-for-and-what-is-it">What does AUC stand for and what is it?</h1>
+
+<p>For classification machine learning model, it’s unwise to use <code class="highlighter-rouge">Accuracy</code> as single measurement for model performance, most of the time, we use <code class="highlighter-rouge">AUC (Area Under the Curve)</code> and <code class="highlighter-rouge">Confusion Matrix</code>, <code class="highlighter-rouge">F1 score</code> as a combination measurement to justify the performance of a classficiation machine learning model, but what exactly is <code class="highlighter-rouge">AUC</code>, what exactly is <code class="highlighter-rouge">Area</code> and the <code class="highlighter-rouge">Curve</code>? I wanna to take a note for future reference.</p>
+
+<h1 id="abbreviations">Abbreviations</h1>
+
+<ul>
+  <li>AUC = Area Under the Curve</li>
+  <li>AUROC = <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic#Area_under_the_curve">Area Under the Receiver Operating Characteristic Curve.</a></li>
+</ul>
+
+<p><code class="highlighter-rouge">AUC</code> is used most of the time mean <code class="highlighter-rouge">AUROC</code>, which is bad practice since as Marc Claesen pointed out AUC is ambiguous (could be any curve) while <code class="highlighter-rouge">AUROC</code> is not.</p>
+
+<h1 id="interpreting-the-auroc">Interpreting the AUROC</h1>
+
+<p>The <code class="highlighter-rouge">AUROC</code> has <a href="https://web.archive.org/web/20160407221300/http://metaoptimize.com:80/qa/questions/988/simple-explanation-of-area-under-the-roc-curve">several equivalent interpretations</a></p>
+
+<ul>
+  <li>The expectation that a uniformly drawn random positive is ranked before a uniformly drawn random negative.</li>
+  <li>The expected proportion of positives ranked before a uniformly drawn random negative.</li>
+  <li>The expected true positive rate if the ranking is split just before a uniformly drawn random negative.</li>
+  <li>The expected proportion of negatives ranked after a uniformly drawn random positive.</li>
+  <li>The expected false positive rate if the ranking is split just after a uniformly drawn random positive.</li>
+</ul>
+
+<p>Going further: <a href="https://stats.stackexchange.com/q/180638/12359">How to derive the probabilistic interpretation of the AUROC?</a></p>
+
+<h1 id="computing-the-auroc">Computing the AUROC</h1>
+
+<p>Assume we have a probabilistic, binary classifier such as logistic regression.</p>
+
+<p>Before presenting the ROC curve (= Receiver Operating Characteristic curve), the concept of <strong>confusion matrix</strong> must be understood. When we make a binary prediction, there can be 4 types of outcomes:</p>
+
+<ul>
+  <li>We predict 0 while the true class is actually 0: this is called a <strong><em>True Negative</em></strong>, i.e. we correctly predict that the class is negative (0). For example, an antivirus did not detect a harmless file as a virus.</li>
+  <li>We predict 0 while the true class is actually 1: this is called a <strong><em>False Negative</em></strong>, i.e. we incorrectly predict that the class is negative (0). For example, an antivirus failed to detect a virus.</li>
+  <li>We predict 1 while the true class is actually 0: this is called a <strong><em>False Positive</em></strong>, i.e. we incorrectly predict that the class is positive (1). For example, an antivirus considered a harmless file to be a virus.</li>
+  <li>We predict 1 while the true class is actually 1: this is called a <strong><em>True Positive</em></strong>, i.e. we correctly predict that the class is positive (1). For example, an antivirus rightfully detected a virus.</li>
+</ul>
+
+<p>To get the confusion matrix, we go over all the predictions made by the model, and count how many times each of those 4 types of outcomes occur:
+<img src="/images/confusionMatrix.png" alt="confusionMatrix" /></p>
+
+<p>In this example of a confusion matrix, among the 50 data points that are classified, 45 are correctly classified and the 5 are misclassified.</p>
+
+<p>Since to compare two different models it is often more convenient to have a single metric rather than several ones, we compute two metrics from the confusion matrix, which we will later combine into one:</p>
+
+<ul>
+  <li>
+    <p><a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity#Sensitivity">True Positive Rate</a>, aka. Sensitivity, <a href="https://en.wikipedia.org/wiki/Hit_rate">Hit Rate</a> or <a href="https://en.wikipedia.org/wiki/Information_retrieval#Recall">Recall Rate</a>, which defined as $\frac{TP}{TP+FN}$. Intuitively this metric corresponds to the proportion of positive data points that are correctly considered as positive, with respect to all positive data points. In other words, the higher True Positive Rate, the fewer positive data points we will miss.</p>
+  </li>
+  <li>
+    <p><a href="https://en.wikipedia.org/wiki/False_positive_rate">False Positive Rate</a>, aka <a href="https://en.wikipedia.org/wiki/Information_retrieval#Fall-out">fall-out</a>, which is defined as $\frac{FP}{FP+TN}$. Intuitively this metric corresponds to the proportion of negative data points that are mistakenly considered as positive, with respect to all negative data points. In other words, the higher False Positive Rate, the more negative data points will be missclassified.</p>
+  </li>
+</ul>
+
+<p>To combine the False Positive Rate and the True Positive Rate into one single metric, we first compute the two former metrics with many different threshold (for example <code class="highlighter-rouge">0.00, 0.01, 0.02, ..., 1.00</code>) for the logistic regression, then plot them on a single graph, with the False Positive Rate values on the abscissa and the True Positive Rate values on the ordinate. The resulting curve is called <code class="highlighter-rouge">ROC curve</code>, and the metric we consider is the <code class="highlighter-rouge">AUC</code> of this <code class="highlighter-rouge">curve</code>, which we call <code class="highlighter-rouge">AUROC</code>.</p>
+
+<p>The following figure shows the AUROC graphically:
+<img src="/images/auroc.png" alt="auroc" /></p>
+
+<p>In this figure, the blue area corresponds to the <code class="highlighter-rouge">Area Under the curve</code> of the <code class="highlighter-rouge">Receiver Operating Characteristic (AUROC)</code>. The dashed line in the diagonal we present the <code class="highlighter-rouge">ROC</code> curve of a random predictor: it has an <code class="highlighter-rouge">AUROC</code> of <code class="highlighter-rouge">0.5</code>. The random predictor is commonly used as a baseline to see whether the model is useful.</p>
+
+<p>If you want to get some first-hand experience:</p>
+
+<ul>
+  <li><a href="http://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html">Python</a></li>
+  <li><a href="http://www.mathworks.com/help/stats/perfcurve.html">MATLAB</a></li>
+</ul>
