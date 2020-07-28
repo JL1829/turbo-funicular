@@ -1,6 +1,169 @@
-<h1 id="the-git-branches-developing-standard-you-should-know">The Git branches developing standard you should know</h1>
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>The Git branches developing standard you should know | Johnny’s Machine Learning Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="The Git branches developing standard you should know" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Some example of Git branch develop standard coder should follow" />
+<meta property="og:description" content="Some example of Git branch develop standard coder should follow" />
+<link rel="canonical" href="https://jl1829.github.io/turbo-funicular/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html" />
+<meta property="og:url" content="https://jl1829.github.io/turbo-funicular/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html" />
+<meta property="og:site_name" content="Johnny’s Machine Learning Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-12T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Some example of Git branch develop standard coder should follow","@type":"BlogPosting","headline":"The Git branches developing standard you should know","dateModified":"2020-03-12T00:00:00-05:00","datePublished":"2020-03-12T00:00:00-05:00","url":"https://jl1829.github.io/turbo-funicular/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://jl1829.github.io/turbo-funicular/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/turbo-funicular/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://jl1829.github.io/turbo-funicular/feed.xml" title="Johnny's Machine Learning Blog" /><link rel="shortcut icon" type="image/x-icon" href="/turbo-funicular/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>The Git branches developing standard you should know | Johnny’s Machine Learning Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="The Git branches developing standard you should know" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Some example of Git branch develop standard coder should follow" />
+<meta property="og:description" content="Some example of Git branch develop standard coder should follow" />
+<link rel="canonical" href="https://jl1829.github.io/turbo-funicular/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html" />
+<meta property="og:url" content="https://jl1829.github.io/turbo-funicular/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html" />
+<meta property="og:site_name" content="Johnny’s Machine Learning Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-12T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Some example of Git branch develop standard coder should follow","@type":"BlogPosting","headline":"The Git branches developing standard you should know","dateModified":"2020-03-12T00:00:00-05:00","datePublished":"2020-03-12T00:00:00-05:00","url":"https://jl1829.github.io/turbo-funicular/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://jl1829.github.io/turbo-funicular/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
 
-<p><img src="/images/git.png" alt="git" /></p>
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://jl1829.github.io/turbo-funicular/feed.xml" title="Johnny's Machine Learning Blog" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/turbo-funicular/">Johnny&#39;s Machine Learning Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/turbo-funicular/about/">About Me</a><a class="page-link" href="/turbo-funicular/search/">Search</a><a class="page-link" href="/turbo-funicular/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">The Git branches developing standard you should know</h1><p class="page-description">Some example of Git branch develop standard coder should follow</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-03-12T00:00:00-05:00" itemprop="datePublished">
+        Mar 12, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      4 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/turbo-funicular/categories/#git">git</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#the-git-branches-developing-standard-you-should-know">The Git branches developing standard you should know</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#branch-management">Branch Management</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#branch-naming">Branch Naming</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#master-branch">Master Branch</a></li>
+<li class="toc-entry toc-h4"><a href="#develop-branch">Develop branch</a></li>
+<li class="toc-entry toc-h4"><a href="#feature-branch">Feature branch</a></li>
+<li class="toc-entry toc-h4"><a href="#release-branch">Release branch</a></li>
+<li class="toc-entry toc-h4"><a href="#hotfix-branch">Hotfix branch</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#routine-task">Routine Task</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#new-function-developing">New Function developing</a></li>
+<li class="toc-entry toc-h4"><a href="#bug-fix">Bug fix</a></li>
+<li class="toc-entry toc-h4"><a href="#testing">Testing</a></li>
+<li class="toc-entry toc-h4"><a href="#bring-it-into-production">Bring it into production</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#message-specification">Message Specification</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#commit-messages-format">Commit messages format</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#different-types">Different Types:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><h1 id="the-git-branches-developing-standard-you-should-know">
+<a class="anchor" href="#the-git-branches-developing-standard-you-should-know" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Git branches developing standard you should know</h1>
+
+<p><img src="/images/git.png" alt="git"></p>
 
 <p>Git is by far the most popular source code management tool. In order to standardize development, keep the code commit record and git branch structure clear, and facilitate subsequent maintenance. Coder should bear in mind there’s some specification of branch naming, commit messages formating, and what &amp; when to merge different branches. 
 In this blog, we are going to talk about the following topic:</p>
@@ -19,27 +182,36 @@ In this blog, we are going to talk about the following topic:</p>
   </li>
 </ul>
 
-<h2 id="branch-management">Branch Management</h2>
-<h3 id="branch-naming">Branch Naming</h3>
-<h4 id="master-branch">Master Branch</h4>
+<h2 id="branch-management">
+<a class="anchor" href="#branch-management" aria-hidden="true"><span class="octicon octicon-link"></span></a>Branch Management</h2>
+<h3 id="branch-naming">
+<a class="anchor" href="#branch-naming" aria-hidden="true"><span class="octicon octicon-link"></span></a>Branch Naming</h3>
+<h4 id="master-branch">
+<a class="anchor" href="#master-branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Master Branch</h4>
 <ul>
-  <li><code class="highlighter-rouge">master</code> is the major branch, it’s also the production deployment branch, stablity is the uppermost important.</li>
+  <li>
+<code class="highlighter-rouge">master</code> is the major branch, it’s also the production deployment branch, stablity is the uppermost important.</li>
   <li>Normally <code class="highlighter-rouge">master</code> branch is merged by <code class="highlighter-rouge">develop</code> and <code class="highlighter-rouge">hotfix</code> branch, modfying code directly into the <code class="highlighter-rouge">master</code> branch is not allowed at all time.</li>
 </ul>
 
-<h4 id="develop-branch">Develop branch</h4>
+<h4 id="develop-branch">
+<a class="anchor" href="#develop-branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Develop branch</h4>
 <ul>
-  <li><code class="highlighter-rouge">develop</code> branch is the branch for further developing, keep updated all the time and merging the code when bugs was fixed.</li>
+  <li>
+<code class="highlighter-rouge">develop</code> branch is the branch for further developing, keep updated all the time and merging the code when bugs was fixed.</li>
   <li>When developing some new feature, there will be a <code class="highlighter-rouge">feature</code> branch breakout from <code class="highlighter-rouge">develop</code> branch in order to provide a “clean” environment for new feature developing.</li>
 </ul>
 
-<h4 id="feature-branch">Feature branch</h4>
+<h4 id="feature-branch">
+<a class="anchor" href="#feature-branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature branch</h4>
 <ul>
   <li>Based on <code class="highlighter-rouge">develop</code> branch, create <code class="highlighter-rouge">feature</code> branch</li>
-  <li>Naming: different features is named after the <code class="highlighter-rouge">feature/</code>, such as <code class="highlighter-rouge">feature/preprocessing_module</code>, <code class="highlighter-rouge">feature/unsupervised_module</code></li>
+  <li>Naming: different features is named after the <code class="highlighter-rouge">feature/</code>, such as <code class="highlighter-rouge">feature/preprocessing_module</code>, <code class="highlighter-rouge">feature/unsupervised_module</code>
+</li>
 </ul>
 
-<h4 id="release-branch">Release branch</h4>
+<h4 id="release-branch">
+<a class="anchor" href="#release-branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Release branch</h4>
 <ul>
   <li>Release is a pre-launch branch. During the release and testing phase, the release branch code is used as a benchmark for testing.</li>
 </ul>
@@ -52,14 +224,17 @@ In this blog, we are going to talk about the following topic:</p>
   <p>After the test is completed, merge the release branch into the master and develop branches. At this time, the master is the latest code and is used for going online.</p>
 </blockquote>
 
-<h4 id="hotfix-branch">Hotfix branch</h4>
+<h4 id="hotfix-branch">
+<a class="anchor" href="#hotfix-branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hotfix branch</h4>
 <ul>
   <li>Branch naming: Started with <code class="highlighter-rouge">hotfix/</code>, and its naming rules are similar to feature branches, it build for bug fixing.</li>
   <li>When there’s emergency, the bug need to be fixed in time. Use the <code class="highlighter-rouge">master</code> branch as the baseline and create a <code class="highlighter-rouge">hotfix</code> branch. After the debug is completed, it need to be merged it into the <code class="highlighter-rouge">master</code> branch and <code class="highlighter-rouge">develop</code> branch.</li>
 </ul>
 
-<h3 id="routine-task">Routine Task</h3>
-<h4 id="new-function-developing">New Function developing</h4>
+<h3 id="routine-task">
+<a class="anchor" href="#routine-task" aria-hidden="true"><span class="octicon octicon-link"></span></a>Routine Task</h3>
+<h4 id="new-function-developing">
+<a class="anchor" href="#new-function-developing" aria-hidden="true"><span class="octicon octicon-link"></span></a>New Function developing</h4>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>dev<span class="o">)</span><span class="nv">$:</span> git checkout <span class="nt">-b</span> feature/xxx            <span class="c"># create feature from dev</span>
 <span class="o">(</span>feature/xxx<span class="o">)</span><span class="nv">$:</span> vi nlp_train.py                <span class="c"># develop</span>
 <span class="o">(</span>feature/xxx<span class="o">)</span><span class="nv">$:</span> git add xxx
@@ -67,7 +242,8 @@ In this blog, we are going to talk about the following topic:</p>
 <span class="o">(</span>dev<span class="o">)</span><span class="nv">$:</span> git merge feature/xxx <span class="nt">--no-ff</span>          <span class="c"># merge feature into dev</span>
 </code></pre></div></div>
 
-<h4 id="bug-fix">Bug fix</h4>
+<h4 id="bug-fix">
+<a class="anchor" href="#bug-fix" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bug fix</h4>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>master<span class="o">)</span><span class="nv">$:</span> git checkout <span class="nt">-b</span> hotfix/xxx         <span class="c"># create hotfix from master</span>
 <span class="o">(</span>hotfix/xxx<span class="o">)</span><span class="nv">$:</span> vi nlp_train.py                <span class="c"># bug fix</span>
 <span class="o">(</span>hotfix/xxx<span class="o">)</span><span class="nv">$:</span> git add xxx
@@ -76,19 +252,22 @@ In this blog, we are going to talk about the following topic:</p>
 <span class="o">(</span>dev<span class="o">)</span><span class="nv">$:</span> git merge hotfix/xxx <span class="nt">--no-ff</span>          <span class="c"># merge hotfix into dev</span>
 </code></pre></div></div>
 
-<h4 id="testing">Testing</h4>
+<h4 id="testing">
+<a class="anchor" href="#testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testing</h4>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>release<span class="o">)</span><span class="nv">$:</span> git merge dev <span class="nt">--no-ff</span>             <span class="c"># merge dev into release</span>
 </code></pre></div></div>
 
-<h4 id="bring-it-into-production">Bring it into production</h4>
+<h4 id="bring-it-into-production">
+<a class="anchor" href="#bring-it-into-production" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bring it into production</h4>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>master<span class="o">)</span><span class="nv">$:</span> git merge release <span class="nt">--no-ff</span>          <span class="c"># merge release into master</span>
 <span class="o">(</span>master<span class="o">)</span><span class="nv">$:</span> git tag <span class="nt">-a</span> v0.1 <span class="nt">-m</span> <span class="s1">'Version name'</span>  <span class="c"># name the version and tag</span>
 </code></pre></div></div>
 
 <p>Above process in one picture
-<img src="/images/branches.jpg" alt="branches" /></p>
+<img src="/images/branches.jpg" alt="branches"></p>
 
-<h2 id="message-specification">Message Specification</h2>
+<h2 id="message-specification">
+<a class="anchor" href="#message-specification" aria-hidden="true"><span class="octicon octicon-link"></span></a>Message Specification</h2>
 <blockquote>
   <p>In a team collaboration project, developers often need to submit some code to fix bugs or implement new features. The files in the project, what functions are implemented, and what problems are solved are gradually forgotten, and finally you need to waste time reading the code. But writing good formatting commit messages helps us, and it also reflects whether a developer is a good collaborator.</p>
 </blockquote>
@@ -101,9 +280,10 @@ In this blog, we are going to talk about the following topic:</p>
 </ul>
 
 <p>Currently there’s different version of commit messages, the <strong>Angular</strong> is the most accepted version, such as: 
-<img src="/images/commit_messages.jpg" alt="commit_messages" /></p>
+<img src="/images/commit_messages.jpg" alt="commit_messages"></p>
 
-<h3 id="commit-messages-format">Commit messages format</h3>
+<h3 id="commit-messages-format">
+<a class="anchor" href="#commit-messages-format" aria-hidden="true"><span class="octicon octicon-link"></span></a>Commit messages format</h3>
 <p>Please refer to <a href="https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines">Angular Git Commit Guidelines</a></p>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;<span class="nb">type</span><span class="o">&gt;</span>: &lt;subject&gt;
 &lt;BLANK LINE&gt;
@@ -113,20 +293,74 @@ In this blog, we are going to talk about the following topic:</p>
 </code></pre></div></div>
 
 <ul>
-  <li><strong>Type</strong>: what’s the type of this commit, is <code class="highlighter-rouge">bugfix</code> or <code class="highlighter-rouge">docs</code> or <code class="highlighter-rouge">style</code> etc.</li>
-  <li><strong>Scope</strong>: the affecting range of this commit.</li>
-  <li><strong>Subject</strong>: Describe the main idea of this commit.</li>
-  <li><strong>Body</strong>: Detail explaination of this commit, such as motivation of this commit</li>
-  <li><strong>Footer</strong>: Is there any related issue or break change?</li>
+  <li>
+<strong>Type</strong>: what’s the type of this commit, is <code class="highlighter-rouge">bugfix</code> or <code class="highlighter-rouge">docs</code> or <code class="highlighter-rouge">style</code> etc.</li>
+  <li>
+<strong>Scope</strong>: the affecting range of this commit.</li>
+  <li>
+<strong>Subject</strong>: Describe the main idea of this commit.</li>
+  <li>
+<strong>Body</strong>: Detail explaination of this commit, such as motivation of this commit</li>
+  <li>
+<strong>Footer</strong>: Is there any related issue or break change?</li>
 </ul>
 
-<h4 id="different-types">Different Types:</h4>
+<h4 id="different-types">
+<a class="anchor" href="#different-types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Different Types:</h4>
 <ul>
-  <li><strong>feat</strong>: New Features</li>
-  <li><strong>fix</strong>: Bug fix</li>
-  <li><strong>docs</strong>: Documentation modification</li>
-  <li><strong>style</strong>: Changing coding style, such as whitespace, indentation.</li>
-  <li><strong>refactor</strong>: Refactor the code, but did not change the logic</li>
-  <li><strong>perf</strong>: adding some new code for performance test</li>
-  <li><strong>test</strong>: Adding test code</li>
+  <li>
+<strong>feat</strong>: New Features</li>
+  <li>
+<strong>fix</strong>: Bug fix</li>
+  <li>
+<strong>docs</strong>: Documentation modification</li>
+  <li>
+<strong>style</strong>: Changing coding style, such as whitespace, indentation.</li>
+  <li>
+<strong>refactor</strong>: Refactor the code, but did not change the logic</li>
+  <li>
+<strong>perf</strong>: adding some new code for performance test</li>
+  <li>
+<strong>test</strong>: Adding test code</li>
 </ul>
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="JL1829/turbo-funicular"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/turbo-funicular/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/turbo-funicular/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/turbo-funicular/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/turbo-funicular/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/JL1829" title="JL1829"><svg class="svg-icon grey"><use xlink:href="/turbo-funicular/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/JALC1829" title="JALC1829"><svg class="svg-icon grey"><use xlink:href="/turbo-funicular/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
