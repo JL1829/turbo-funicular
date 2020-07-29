@@ -103,7 +103,54 @@ window.onload = wrap_img;
   </header>
 
   <div class="post-content">
-    <p>Hi and welcome to my blog, I am Johnny.Lu, staying in the <a href="https://www.quora.com/Singapore-is-a-fine-country-Youll-get-a-fine-for-everything-What-does-this-mean">“Fine” city called Singapore(joke)</a>, currently I am the Lead Consulting Engineer(Data Science, Machine Learning)in <a href="https://www.allite-telesis.co.jp">Allied Telesis</a>, a Japanese pioneer company in digital communication.</p>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">README</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Doc String PlaceHolder"""</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">'JL1829'</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2020</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">FullName</span> <span class="o">=</span> <span class="s">'Johnny(ZHIPING) Lu'</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">education</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">'Machine Learning'</span><span class="p">:</span> <span class="p">[</span><span class="s">'Machine Learning'</span><span class="p">,</span> <span class="s">'Stanford Online'</span><span class="p">,</span>
+                                 <span class="s">'Deep Learning'</span><span class="p">,</span> <span class="s">'Coursera'</span><span class="p">,</span>
+                                 <span class="s">'Mathematic for Machine Learning'</span><span class="p">,</span> <span class="s">'Imperial College London'</span><span class="p">],</span>
+            <span class="s">'Master'</span><span class="p">:</span> <span class="p">[</span><span class="s">'MSc of Technology and Intelligent System'</span><span class="p">,</span> <span class="s">'NUS'</span><span class="p">],</span> 
+        <span class="p">}</span>
+    
+    <span class="k">def</span> <span class="nf">doing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">now</span><span class="o">=</span><span class="mi">2020</span><span class="p">):</span>
+        <span class="n">today</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">year</span>
+        
+        <span class="k">if</span> <span class="n">now</span> <span class="o">==</span> <span class="n">today</span><span class="p">:</span>
+            <span class="n">experience</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">employment</span><span class="p">[</span><span class="s">'Lead Consulting Engineer'</span><span class="p">]</span>
+            <span class="k">return</span> <span class="s">"""
+            I am a Lead Consulting Engineer for Machine Learning and Data Science, current
+            working project:
+             - Customer purchase value prediction
+             - Customer sentimental anaylser for review
+             - Using Autoencoder for Computer Network Anomaly Detection.
+            """</span>
+            <span class="n">learning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">education</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Master'</span><span class="p">)</span>
+            
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">today</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">experience</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">employment</span><span class="p">[</span><span class="s">'System Engineer'</span><span class="p">]</span>
+            <span class="k">return</span> <span class="s">"""
+            I am a system engineer with around 10 years of solution design and 
+            customer facing experiences, designing solution based on current
+            product, as well as developing customized product for particular requirement."""</span>
+            
+        <span class="k">if</span> <span class="n">now</span> <span class="o">&gt;</span> <span class="n">today</span><span class="p">:</span>
+            <span class="n">goal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">employment</span><span class="p">[</span><span class="s">'Machine Learning Engineer'</span><span class="p">,</span> <span class="s">'Data Scientist'</span><span class="p">]</span>
+            <span class="k">return</span> <span class="s">"""
+            I am eager to explore the bigger world of Machine Learning and Data Science.
+            **Open for Opportunity**
+            """</span>
+            
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">"""
+            ### Hi there ~~
+            """</span>
+
+<span class="n">me</span> <span class="o">=</span> <span class="n">README</span><span class="p">(</span><span class="mi">2020</span><span class="p">)</span>
+</code></pre></div></div>
 
 <h2 id="experiences">Experiences</h2>
 
