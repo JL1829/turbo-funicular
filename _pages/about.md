@@ -134,7 +134,7 @@ me = README(2020)
 
 ### Guangzhou Civil Aviation College
 > Associate's degree, Electrical and Electronics Engineering
-* Further Mathematics
+* Advance Mathematics
 * College English
 * Circuit Analysis
 * Analog Electronic Technology
