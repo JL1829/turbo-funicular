@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Tail Problem and Double-Ended Queue | Johnny’s Machine Learning Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Tail Problem and Double-Ended Queue" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Can you constrain your function’s memory utilization for any iterable?" />
+<meta property="og:description" content="Can you constrain your function’s memory utilization for any iterable?" />
+<link rel="canonical" href="https://johdev.com/python/2020/09/17/Tail-Problem.html" />
+<meta property="og:url" content="https://johdev.com/python/2020/09/17/Tail-Problem.html" />
+<meta property="og:site_name" content="Johnny’s Machine Learning Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-09-17T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Tail Problem and Double-Ended Queue","description":"Can you constrain your function’s memory utilization for any iterable?","datePublished":"2020-09-17T00:00:00-05:00","dateModified":"2020-09-17T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/python/2020/09/17/Tail-Problem.html"},"url":"https://johdev.com/python/2020/09/17/Tail-Problem.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Tail Problem and Double-Ended Queue | Johnny’s Machine Learning Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Tail Problem and Double-Ended Queue" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Can you constrain your function’s memory utilization for any iterable?" />
+<meta property="og:description" content="Can you constrain your function’s memory utilization for any iterable?" />
+<link rel="canonical" href="https://johdev.com/python/2020/09/17/Tail-Problem.html" />
+<meta property="og:url" content="https://johdev.com/python/2020/09/17/Tail-Problem.html" />
+<meta property="og:site_name" content="Johnny’s Machine Learning Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-09-17T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Tail Problem and Double-Ended Queue","description":"Can you constrain your function’s memory utilization for any iterable?","datePublished":"2020-09-17T00:00:00-05:00","dateModified":"2020-09-17T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/python/2020/09/17/Tail-Problem.html"},"url":"https://johdev.com/python/2020/09/17/Tail-Problem.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Johnny&#39;s Machine Learning Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Tail Problem and Double-Ended Queue</h1><p class="page-description">Can you constrain your function's memory utilization for any iterable?</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-09-17T00:00:00-05:00" itemprop="datePublished">
+        Sep 17, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      9 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#Python">Python</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/JL1829/turbo-funicular/tree/master/_notebooks/2020-09-17-Tail Problem.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/JL1829/turbo-funicular/master?filepath=_notebooks%2F2020-09-17-Tail+Problem.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/JL1829/turbo-funicular/blob/master/_notebooks/2020-09-17-Tail Problem.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Problem-Statement">Problem Statement </a></li>
+<li class="toc-entry toc-h1"><a href="#Solution">Solution </a></li>
+<li class="toc-entry toc-h1"><a href="#deque()----Double-Ended-Queue">deque() -- Double-Ended Queue </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Populating">Populating </a></li>
+<li class="toc-entry toc-h2"><a href="#Consuming">Consuming </a></li>
+<li class="toc-entry toc-h2"><a href="#Rotating">Rotating </a></li>
+<li class="toc-entry toc-h2"><a href="#Constraining-the-Queue-Size">Constraining the Queue Size </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-09-17-Tail Problem.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Problem-Statement">
+<a class="anchor" href="#Problem-Statement" aria-hidden="true"><span class="octicon octicon-link"></span></a>Problem Statement<a class="anchor-link" href="#Problem-Statement"> </a>
+</h1>
+<p>To write a function that takes any iterable (like <code>list</code>, <code>string</code>, <code>tuple</code>, <code>generator</code>), and an integer <code>n</code> that returns the last <code>n</code> elements from the given iterable as <code>list</code>, if given integer <code>n</code> is &lt;= 0, return empty <code>list</code>, meanwhile, constrain the memoey usage, the function should be able to accept super long iterable (such as loop over a <code>20GB</code> log file) and return the last <code>n</code> elements without over run the memory</p>
+<p><strong>For example</strong></p>
+<div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="o">&gt;&gt;</span> <span class="n">tail</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tail</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">[</span><span class="s1">'l'</span><span class="p">,</span> <span class="s1">'o'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tail</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">[]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tail</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">[]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">nums</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10000000</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tail</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">99999940000009</span><span class="p">,</span> <span class="mi">99999960000004</span><span class="p">,</span> <span class="mi">99999980000001</span><span class="p">]</span>
+</pre></div>
+<hr>
+<h1 id="Solution">
+<a class="anchor" href="#Solution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Solution<a class="anchor-link" href="#Solution"> </a>
+</h1>
+<p>Well, the first half of this problem can peel down to list comprehension and slicing problem, we know that the purpose of list comprehension is to create a list from another list, or create an iterable from another iterable, such as:<code>pythonnumbers = [1, 2, 3, 4, 5]
+square = [num**2 for num in numbers]</code></p>
+<p>It's a very elegent way to create another iterable with readability count, we can simply solve the first half of problem by this way:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># define the test case</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">TailTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="sd">"""Test for first half of problem"""</span>
+
+    <span class="k">def</span> <span class="nf">test_zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tail</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> <span class="p">[])</span>
+    
+    <span class="k">def</span> <span class="nf">test_one</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tail</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    
+    <span class="k">def</span> <span class="nf">test_two</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tail</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+    
+    <span class="k">def</span> <span class="nf">test_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tail</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">[</span><span class="s1">'l'</span><span class="p">,</span> <span class="s1">'o'</span><span class="p">])</span>
+    
+    <span class="k">def</span> <span class="nf">test_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tail</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+    
+    <span class="k">def</span> <span class="nf">test_larger_than_length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tail</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tail</span><span class="p">([],</span> <span class="mi">10</span><span class="p">),</span> <span class="p">[])</span>
+    
+    <span class="k">def</span> <span class="nf">test_negative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tail</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">[])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tail</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">),</span> <span class="p">[])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's try the first approach, our objective is to write a function that can pass all the test case.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">tail</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">][</span><span class="o">-</span><span class="n">index</span><span class="p">:]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+        
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">'first-arg-is-ignored'</span><span class="p">],</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>test_larger_than_length (__main__.TailTest) ...ok
+test_negative (__main__.TailTest) ...ok
+test_one (__main__.TailTest) ...ok
+test_string (__main__.TailTest) ...ok
+test_tuple (__main__.TailTest) ...ok
+test_two (__main__.TailTest) ...ok
+test_zero (__main__.TailTest) ...ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.006s
+
+OK
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;unittest.main.TestProgram at 0x7f84125d9f50&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now the tricky part is how to handle to <code>generator</code> object, we know that <code>generator</code> object in Python sometime we call it "lazy" itertor, as when we define the <code>generator</code> Python will "record" the "recipe" of what we want to do, but actually it doing nothing, only when we call <code>next()</code> method, it will generate the next value from our "recipe", the upsize of this method is good memory utilization, as it will not generate anything before hand, and <code>generator</code> have another property as "one time usage", let's see what it mean:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nums</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;generator object &lt;genexpr&gt; at 0x7f84122803d0&gt;
+&lt;class 'generator'&gt;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># call for next value</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>4
+9
+16
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">StopIteration</span>                             Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-7-973643c90d98&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> print<span class="ansi-blue-fg">(</span>next<span class="ansi-blue-fg">(</span>nums<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> print<span class="ansi-blue-fg">(</span>next<span class="ansi-blue-fg">(</span>nums<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">----&gt; 4</span><span class="ansi-red-fg"> </span>print<span class="ansi-blue-fg">(</span>next<span class="ansi-blue-fg">(</span>nums<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">StopIteration</span>: </pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Each time we call <code>next()</code> to the <code>generator</code> the <code>generator</code> will excute the "recepie" for the next value, untill it catch the <code>StopIteration</code> excaption, now the <code>generator</code> become empty, if we need to reuse it again, need to redefine it:</p>
+<div class="highlight"><pre><span></span><span class="n">nums</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</pre></div>
+<p>But please take note that every <code>generator</code> is an iterator, that mean you can loop over this iterator, or convert it into <code>list</code>:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
+<span class="n">squares</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">squares</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[0,
+ 1,
+ 4,
+ 9,
+ 16,
+ 25,
+ 36,
+ 49,
+ 64,
+ 81,
+ 100,
+ 121,
+ 144,
+ 169,
+ 196,
+ 225,
+ 256,
+ 289,
+ 324,
+ 361,
+ 400,
+ 441,
+ 484,
+ 529,
+ 576,
+ 625,
+ 676,
+ 729,
+ 784,
+ 841,
+ 900,
+ 961,
+ 1024,
+ 1089,
+ 1156,
+ 1225,
+ 1296,
+ 1369,
+ 1444,
+ 1521,
+ 1600,
+ 1681,
+ 1764,
+ 1849,
+ 1936,
+ 2025,
+ 2116,
+ 2209,
+ 2304,
+ 2401,
+ 2500,
+ 2601,
+ 2704,
+ 2809,
+ 2916,
+ 3025,
+ 3136,
+ 3249,
+ 3364,
+ 3481,
+ 3600,
+ 3721,
+ 3844,
+ 3969,
+ 4096,
+ 4225,
+ 4356,
+ 4489,
+ 4624,
+ 4761,
+ 4900,
+ 5041,
+ 5184,
+ 5329,
+ 5476,
+ 5625,
+ 5776,
+ 5929,
+ 6084,
+ 6241,
+ 6400,
+ 6561,
+ 6724,
+ 6889,
+ 7056,
+ 7225,
+ 7396,
+ 7569,
+ 7744,
+ 7921,
+ 8100,
+ 8281,
+ 8464,
+ 8649,
+ 8836,
+ 9025,
+ 9216,
+ 9409,
+ 9604,
+ 9801]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So it means our original solution did solve the <code>generator</code> problem:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tail</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">][</span><span class="o">-</span><span class="n">index</span><span class="p">:]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+</pre></div>
+<p>the <code>return [i for i in iterable]</code> will convert the <code>generator</code> into a list, we can write a test case to prove it.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">TailTestGenerator</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="sd">"""Test generator"""</span>
+
+    <span class="k">def</span> <span class="nf">test_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">nums</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tail</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">[])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tail</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">[])</span>
+        <span class="c1"># consume the generator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tail</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">])</span>
+        <span class="c1"># generator is one time use, now should be empty</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">nums</span><span class="p">),</span> <span class="p">[])</span>
+        <span class="c1"># empty generator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tail</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">[])</span>
+
+<span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">'first-arg-is-ignored'</span><span class="p">],</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>test_larger_than_length (__main__.TailTest) ...ok
+test_negative (__main__.TailTest) ...ok
+test_one (__main__.TailTest) ...ok
+test_string (__main__.TailTest) ...ok
+test_tuple (__main__.TailTest) ...ok
+test_two (__main__.TailTest) ...ok
+test_zero (__main__.TailTest) ...ok
+test_iterator (__main__.TailTestGenerator) ...ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.007s
+
+OK
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;unittest.main.TestProgram at 0x7f841257ae50&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Hoo-Ray, seems we finished our work today, but wait, remember the last requirement of the <code>Problem Statement</code> ?</p>
+<blockquote>
+<p>the function should be able to accept super long iterable (such as loop over a <code>20GB</code> log file) and return the last <code>n</code> elements without over run the memory.</p>
+</blockquote>
+<p>If we try to feed the function with a <code>20GB</code> generator, what will happened?</p>
+<p>Recall our function:<code>pythondef tail(iterable, index):
+    if index &gt; 0:
+        return [i for i in iterable][-index:]
+    else:
+        return []</code></p>
+<p>if the <code>index</code> is <code>&gt; 0</code>, it will return <code>[i for i in iterable][-index:]</code>, this is an actual list comprehension, it will convert the <code>iterable</code> into full list, means if we pass a <code>20GB</code> generator, the function will generate a <code>20GB</code> list, which is over run the memory, how can we furthre improve the function, to reduce the memory usage?</p>
+<p>Here introduce <code>deque()</code> <strong>Double Ended Queue</strong></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="deque()----Double-Ended-Queue">
+<a class="anchor" href="#deque()----Double-Ended-Queue" aria-hidden="true"><span class="octicon octicon-link"></span></a>deque() -- Double-Ended Queue<a class="anchor-link" href="#deque()----Double-Ended-Queue"> </a>
+</h1>
+<p>A double-ended queue, or deque, supports adding and removing elements from either end of the queue. The more commonly used stacks and queues are degenerate forms of deques, where the inputs and outputs are restricted to a single end.</p>
+<p>it's properties:</p>
+<ul>
+<li>it accept any iterable</li>
+<li>Populating both end</li>
+<li>Consuming</li>
+<li>Rotating</li>
+<li>Constraining the Queue Size</li>
+</ul>
+<p>Some exmaple:</p>
+<hr>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="s1">'abcdefg'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Deque:'</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Length:'</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Left end:'</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Right end:'</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">d</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">'c'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'remove(c):'</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Deque: deque(['a', 'b', 'c', 'd', 'e', 'f', 'g'])
+Length: 7
+Left end: a
+Right end: g
+remove(c): deque(['a', 'b', 'd', 'e', 'f', 'g'])
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Since deques are a type of sequence container, they support some of the same operations as list, such as examining the contents with <code>__getitem__()</code>, determining length, and removing elements from the middle of the queue by matching identity.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Populating">
+<a class="anchor" href="#Populating" aria-hidden="true"><span class="octicon octicon-link"></span></a>Populating<a class="anchor-link" href="#Populating"> </a>
+</h2>
+<p>A deque can be populated from either end, termed “left” and “right” in the Python implementation.</p>
+<p>Example:</p>
+<hr>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># define deque</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+
+<span class="c1"># populating value</span>
+<span class="n">d</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="s1">'abcdefg'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'extend       :'</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+
+<span class="c1"># add to the right</span>
+<span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'h'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'append       :'</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+
+
+<span class="c1"># add to the left</span>
+<span class="n">d1</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+<span class="n">d1</span><span class="o">.</span><span class="n">extendleft</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'extend left        :'</span><span class="p">,</span> <span class="n">d1</span><span class="p">)</span>
+<span class="n">d1</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'append left        :'</span><span class="p">,</span> <span class="n">d1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>extend       : deque(['a', 'b', 'c', 'd', 'e', 'f', 'g'])
+append       : deque(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'])
+extend left        : deque([5, 4, 3, 2, 1, 0])
+append left        : deque([6, 5, 4, 3, 2, 1, 0])
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Consuming">
+<a class="anchor" href="#Consuming" aria-hidden="true"><span class="octicon octicon-link"></span></a>Consuming<a class="anchor-link" href="#Consuming"> </a>
+</h2>
+<p>Similarly, the elements of the <code>deque()</code> can be consumed from both ends or either end, depending on the algorithm being applied.</p>
+<p><strong>Example:</strong></p>
+<hr>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">'From the right:'</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="s1">'abcdefg'</span><span class="p">)</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s1">''</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">break</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">From the left:'</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">popleft</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s1">''</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">break</span>
+<span class="nb">print</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>From the right:
+gfedcba
+
+From the left:
+012345
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Since deques are thread-safe, the contents can even be consumed from both ends at the same time from separate threads.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">candle</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">burn</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">nextSource</span><span class="p">):</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">next</span> <span class="o">=</span> <span class="n">nextSource</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">{:&gt;8}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="nb">next</span><span class="p">))</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">{:&gt;8}</span><span class="s1"> done'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">direction</span><span class="p">))</span>
+    <span class="k">return</span>
+
+
+<span class="n">left</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">burn</span><span class="p">,</span>
+                        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s1">'Left'</span><span class="p">,</span> <span class="n">candle</span><span class="o">.</span><span class="n">popleft</span><span class="p">))</span>
+<span class="n">right</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">burn</span><span class="p">,</span>
+                         <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s1">'Right'</span><span class="p">,</span> <span class="n">candle</span><span class="o">.</span><span class="n">pop</span><span class="p">))</span>
+
+<span class="n">left</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">right</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="n">left</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="n">right</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Left: 0
+   Right: 4
+   Right: 3    Left: 1
+
+   Right: 2
+    Left done
+   Right done
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Rotating">
+<a class="anchor" href="#Rotating" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rotating<a class="anchor-link" href="#Rotating"> </a>
+</h2>
+<p>Another useful aspect of the deque is the ability to rotate it in either direction, so as to skip over some items.</p>
+<p><strong>Example:</strong></p>
+<hr>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Normal        :'</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">d</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Right rotation:'</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">d</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Left rotation :'</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Normal        : deque([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+Right rotation: deque([8, 9, 0, 1, 2, 3, 4, 5, 6, 7])
+Left rotation : deque([2, 3, 4, 5, 6, 7, 8, 9, 0, 1])
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Constraining-the-Queue-Size">
+<a class="anchor" href="#Constraining-the-Queue-Size" aria-hidden="true"><span class="octicon octicon-link"></span></a>Constraining the Queue Size<a class="anchor-link" href="#Constraining-the-Queue-Size"> </a>
+</h2>
+<p>A <code>deque()</code> instance can be configured with a maximum length so that it never grows beyond that size. When the queue reaches the specified length, existing items are discarded as new items are added. This behavior is useful for finding the last n items in a stream of undetermined length.</p>
+<p><strong>Example:</strong></p>
+<hr>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="c1"># Set the random seed so we see the same output each time</span>
+<span class="c1"># the script is run.</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">d1</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">d2</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'n ='</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">d1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">d2</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'D1:'</span><span class="p">,</span> <span class="n">d1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'D2:'</span><span class="p">,</span> <span class="n">d2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>n = 17
+D1: deque([17], maxlen=3)
+D2: deque([17], maxlen=3)
+n = 72
+D1: deque([17, 72], maxlen=3)
+D2: deque([72, 17], maxlen=3)
+n = 97
+D1: deque([17, 72, 97], maxlen=3)
+D2: deque([97, 72, 17], maxlen=3)
+n = 8
+D1: deque([72, 97, 8], maxlen=3)
+D2: deque([8, 97, 72], maxlen=3)
+n = 32
+D1: deque([97, 8, 32], maxlen=3)
+D2: deque([32, 8, 97], maxlen=3)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we know about <code>deque()</code>, it do have two properties we can use:</p>
+<ul>
+<li>
+<blockquote>
+<p>it accept any iterable</p>
+</blockquote>
+</li>
+<li>
+<blockquote>
+<p>it constrain the queue size</p>
+</blockquote>
+</li>
+</ul>
+<p>We can use <code>deque()</code> right away:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">del</span> <span class="n">tail</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+
+<span class="k">def</span> <span class="nf">tail</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">deque</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">index</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's try out the test case</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="s1">'first-arg-is-ignored'</span><span class="p">],</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">exit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>test_larger_than_length (__main__.TailTest) ...ok
+test_negative (__main__.TailTest) ...ok
+test_one (__main__.TailTest) ...ok
+test_string (__main__.TailTest) ...ok
+test_tuple (__main__.TailTest) ...ok
+test_two (__main__.TailTest) ...ok
+test_zero (__main__.TailTest) ...ok
+test_iterator (__main__.TailTestGenerator) ...ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.005s
+
+OK
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;unittest.main.TestProgram at 0x7f8411ff94d0&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So we're maxing a deque with our iterable and setting the maximum length (we could have used a positional argument but we chose to use a named one instead) and then converting that deque to a list so that our tests (which expect a list) pass.</p>
+<p>By utilizing the <code>maxlen</code> in <code>deque()</code> we can constrain the return list size to the <code>index</code> we want, if the <code>generator</code> generate more than the <code>maxlen</code>, <code>deque()</code> object will discard the values that more than the <code>maxlen</code></p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="JL1829/turbo-funicular"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/python/2020/09/17/Tail-Problem.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/JL1829" title="JL1829"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/JALC1829" title="JALC1829"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
