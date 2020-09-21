@@ -109,7 +109,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      9 min read
+      16 min read
     
 </span></p>
 
@@ -151,7 +151,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h1"><a href="#About-Standardization">About Standardization </a></li>
 <li class="toc-entry toc-h1"><a href="#About-Min-Max-scaling">About Min-Max scaling </a></li>
 <li class="toc-entry toc-h1"><a href="#Z-Score-Standardization-or-Min-Max-Scaling">Z-Score Standardization or Min-Max Scaling </a></li>
-<li class="toc-entry toc-h1"><a href="#Standardizing-and-Normalizing---Hot-it-can-be-done-using-scikit-learn">Standardizing and Normalizing - Hot it can be done using scikit-learn </a>
+<li class="toc-entry toc-h1"><a href="#Standardizing-and-Normalizing---How-it-can-be-done-using-scikit-learn">Standardizing and Normalizing - How it can be done using scikit-learn </a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#Loading-the-wine-dataset">Loading the wine dataset </a></li>
 <li class="toc-entry toc-h2"><a href="#Standardization-and-Min-Max-Scaling">Standardization and Min-Max Scaling </a></li>
@@ -162,6 +162,23 @@ window.onload = wrap_img;
 <ul>
 <li class="toc-entry toc-h2"><a href="#Native-Python">Native Python </a></li>
 <li class="toc-entry toc-h2"><a href="#NumPy">NumPy </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#The-effect-of-standardization-on-PCA-in-a-pattern-classification-task">The effect of standardization on PCA in a pattern classification task </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Read-full-dataset">Read full dataset </a></li>
+<li class="toc-entry toc-h2"><a href="#Spliting-the-dataset-into-train-set-and-test-set">Spliting the dataset into train set and test set </a></li>
+<li class="toc-entry toc-h2"><a href="#Feature-Scaling----Standardization">Feature Scaling -- Standardization </a></li>
+<li class="toc-entry toc-h2"><a href="#Dimensionality-reduction-via-Principal-Component-Analysis(PCA)">Dimensionality reduction via Principal Component Analysis(PCA) </a></li>
+<li class="toc-entry toc-h2"><a href="#Train-a-naive-Bayes-Classifier">Train a naive Bayes Classifier </a></li>
+<li class="toc-entry toc-h2"><a href="#Other-Classifier">Other Classifier </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Appendix:-The-effect-of-scaling-and-mean-centering-of-variable-prior-to-PCA">Appendix: The effect of scaling and mean centering of variable prior to PCA </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Mean-centering-does-not-affect-the-covariance-matrix">Mean centering does not affect the covariance matrix </a></li>
+<li class="toc-entry toc-h2"><a href="#Scaling-of-variables-does-affect-the-covariance-matrix">Scaling of variables does affect the covariance matrix </a></li>
+<li class="toc-entry toc-h2"><a href="#Standardizing-affects-the-covariance">Standardizing affects the covariance </a></li>
 </ul>
 </li>
 </ul><!--
@@ -216,7 +233,7 @@ $$\Delta w_j = -\eta \frac{\partial J}{\partial w_j} = \eta \sum_i (t^{i} - o^{i
 </ul>
 <p>Alorithms that use, for example: <code>Euclidean Distance Measures</code> - in fact, <code>tree-based</code> classifier are probably the only classifiers where feature scaling doesn't make a difference.</p>
 <p>In fact, the only family of algorithms that I could think of being scale-invariant are <code>tree-based</code> method.</p>
-<p>Let's take a general <code>CART Dicision Tree</code> algorithm. Without going into much depth regarding information gain and impurity measures, we can think of the decision as <code>is feature $x_i$ &gt;= some_value</code>? Intuitively, wen can see that it really doesn't matter on which scale this feature is.</p>
+<p>Let's take a general <code>CART Dicision Tree</code> algorithm. Without going into much depth regarding information gain and impurity measures, we can think of the decision as <code>is feature x_i &gt;= some_value</code>? Intuitively, wen can see that it really doesn't matter on which scale this feature is.</p>
 <p>Some examples of algorithms where feature scaling matters are:</p>
 <ul>
 <li>
@@ -250,8 +267,8 @@ $$X_{norm} = \frac{X_{i} - X_{min}}{X_{max} - X_{min}}$$
 <p>"Standardization or Min-Max scaling"? - There is no obvious answer to this question: it really depends on the application.</p>
 <p>For example, in clustering analyses, standardization may be especially crucial in order to compare similarities between features based on certain distance measures. Another prominent example is the <code>Principal Component Analysis</code>, where we usually prefer <code>Standardization</code> over <code>Min-Max Scaling</code>, since we are interested in the components that maximize the variance(depending on the question and if the PCA computes the components via the correaltion matrix instead of the covariance matrix)</p>
 <p>However this doesn't mean that <code>Min-Max Scaling</code> is not useful at all, A popular application is <code>image processing</code>, where pixel intensities have to be normalized to fit withint a certain range (i.e., <code>[0, 255]</code> for the RGB colour range). Also, typical <em>Neural Network</em> Algorithm require data that on a <code>0 - 1</code> scale.</p>
-<h1 id="Standardizing-and-Normalizing---Hot-it-can-be-done-using-scikit-learn">
-<a class="anchor" href="#Standardizing-and-Normalizing---Hot-it-can-be-done-using-scikit-learn" aria-hidden="true"><span class="octicon octicon-link"></span></a>Standardizing and Normalizing - Hot it can be done using <code>scikit-learn</code><a class="anchor-link" href="#Standardizing-and-Normalizing---Hot-it-can-be-done-using-scikit-learn"> </a>
+<h1 id="Standardizing-and-Normalizing---How-it-can-be-done-using-scikit-learn">
+<a class="anchor" href="#Standardizing-and-Normalizing---How-it-can-be-done-using-scikit-learn" aria-hidden="true"><span class="octicon octicon-link"></span></a>Standardizing and Normalizing - How it can be done using <code>scikit-learn</code><a class="anchor-link" href="#Standardizing-and-Normalizing---How-it-can-be-done-using-scikit-learn"> </a>
 </h1>
 <p>Of course, we could make use of NumPy's vectorization capabilities to calculate the <code>Z-Score</code> for standardization and normalize the data using the equations that were mentioned in the previous sections. However, there is even more convenient aapproach using the preprocessing module from one of Python's open-source maachine learning library <a href="http://scikit-learn.org/">scikit-learn</a></p>
 <p>For the following examples anad discussing, we will have a look at free <code>Wine</code> Dataset that is deposited on the <a href="http://archive.ics.uci.edu/ml/index.php">UCI Machine Learning Repository</a></p>
@@ -429,7 +446,7 @@ memory usage: 4.3 KB
 
 <span class="n">standard_scale</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
 <span class="n">df_stdScale</span> <span class="o">=</span> <span class="n">standard_scale</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">'Alcohol'</span><span class="p">,</span> <span class="s1">'MalicAcid'</span><span class="p">]])</span>
-<span class="n">df_stdScale</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">df_stdScale</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -446,7 +463,9 @@ memory usage: 4.3 KB
 <div class="output_text output_subarea output_execute_result">
 <pre>array([[ 1.51861254, -0.5622498 ],
        [ 0.24628963, -0.49941338],
-       [ 0.19687903,  0.02123125]])</pre>
+       [ 0.19687903,  0.02123125],
+       [ 1.69154964, -0.34681064],
+       [ 0.29570023,  0.22769377]])</pre>
 </div>
 
 </div>
@@ -466,7 +485,7 @@ memory usage: 4.3 KB
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">minmax_scale</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
 <span class="n">df_minmax</span> <span class="o">=</span> <span class="n">minmax_scale</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">'Alcohol'</span><span class="p">,</span> <span class="s1">'MalicAcid'</span><span class="p">]])</span>
-<span class="n">df_minmax</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">df_minmax</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -483,7 +502,9 @@ memory usage: 4.3 KB
 <div class="output_text output_subarea output_execute_result">
 <pre>array([[0.84210526, 0.1916996 ],
        [0.57105263, 0.2055336 ],
-       [0.56052632, 0.3201581 ]])</pre>
+       [0.56052632, 0.3201581 ],
+       [0.87894737, 0.23913043],
+       [0.58157895, 0.36561265]])</pre>
 </div>
 
 </div>
@@ -779,16 +800,16 @@ $$X_{norm} = \frac{X_i - X_{min}}{X_{max} - X_{min}}$$
 <span class="n">z_scores</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x_i</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span><span class="o">/</span><span class="n">std_dev</span> <span class="k">for</span> <span class="n">x_i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Native Python"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">mean</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">std_dev</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">z_scores</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Array X: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Array X mean: </span><span class="si">{</span><span class="n">mean</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Array X Standard Deviation: </span><span class="si">{</span><span class="n">std_dev</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Array X Z Scores: </span><span class="si">{</span><span class="n">z_scores</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"NumPy for cross validation"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="p">[(</span><span class="n">x_i</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x_i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Numpy Array: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Numpy Array mean: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Numpy Array Standard Deviation: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Numpy Z Scores: </span><span class="si">{</span><span class="p">[(</span><span class="n">x_i</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x_i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Min-Max: </span><span class="si">{</span><span class="p">[(</span><span class="n">x_i</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">/</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x_i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
@@ -804,16 +825,22 @@ $$X_{norm} = \frac{X_i - X_{min}}{X_{max} - X_{min}}$$
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Native Python
-[1, 4, 5, 6, 6, 2, 3]
-3.857142857142857
-1.8070158058105026
-[-1.5811388300841895, 0.07905694150420944, 0.6324555320336758, 1.185854122563142, 1.185854122563142, -1.0277402395547233, -0.4743416490252569] 
+Array X: [1, 4, 5, 6, 6, 2, 3]
+
+Array X mean: 3.857142857142857
+
+Array X Standard Deviation: 1.8070158058105026
+
+Array X Z Scores: [-1.5811388300841895, 0.07905694150420944, 0.6324555320336758, 1.185854122563142, 1.185854122563142, -1.0277402395547233, -0.4743416490252569]
 
 NumPy for cross validation
-[1, 4, 5, 6, 6, 2, 3]
-3.857142857142857
-1.8070158058105026
-[-1.5811388300841895, 0.07905694150420944, 0.6324555320336758, 1.185854122563142, 1.185854122563142, -1.0277402395547233, -0.4743416490252569]
+Numpy Array: [1, 4, 5, 6, 6, 2, 3]
+
+Numpy Array mean: 3.857142857142857
+
+Numpy Array Standard Deviation: 1.8070158058105026
+
+Numpy Z Scores: [-1.5811388300841895, 0.07905694150420944, 0.6324555320336758, 1.185854122563142, 1.185854122563142, -1.0277402395547233, -0.4743416490252569]
 
 Min-Max: [0.0, 0.6, 0.8, 1.0, 1.0, 0.2, 0.4]
 </pre>
@@ -853,8 +880,8 @@ Min-Max: [0.0, 0.6, 0.8, 1.0, 1.0, 0.2, 0.4]
 
 <span class="n">z_scores_np</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_np</span> <span class="o">-</span> <span class="n">x_np</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">x_np</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"X NumPy array: </span><span class="si">{</span><span class="n">x_np</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Z scores in Numpy: </span><span class="si">{</span><span class="n">z_scores_np</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"X NumPy array: </span><span class="si">{</span><span class="n">x_np</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Z scores in Numpy: </span><span class="se">\n</span><span class="si">{</span><span class="n">z_scores_np</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -868,7 +895,9 @@ Min-Max: [0.0, 0.6, 0.8, 1.0, 1.0, 0.2, 0.4]
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>X NumPy array: [1 4 5 6 6 2 3]
-Z scores in Numpy: [-1.58113883  0.07905694  0.63245553  1.18585412  1.18585412 -1.02774024
+
+Z scores in Numpy: 
+[-1.58113883  0.07905694  0.63245553  1.18585412  1.18585412 -1.02774024
  -0.47434165]
 </pre>
 </div>
@@ -889,7 +918,7 @@ Z scores in Numpy: [-1.58113883  0.07905694  0.63245553  1.18585412  1.18585412 
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># min-max scaling</span>
 <span class="n">np_minmax</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_np</span> <span class="o">-</span> <span class="n">x_np</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">x_np</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">x_np</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Min-Max scaling in Numpy: </span><span class="si">{</span><span class="n">np_minmax</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Min-Max scaling in Numpy: </span><span class="se">\n</span><span class="si">{</span><span class="n">np_minmax</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -902,7 +931,8 @@ Z scores in Numpy: [-1.58113883  0.07905694  0.63245553  1.18585412  1.18585412 
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Min-Max scaling in Numpy: [0.  0.6 0.8 1.  1.  0.2 0.4]
+<pre>Min-Max scaling in Numpy: 
+[0.  0.6 0.8 1.  1.  0.2 0.4]
 </pre>
 </div>
 </div>
@@ -913,6 +943,844 @@ Z scores in Numpy: [-1.58113883  0.07905694  0.63245553  1.18585412  1.18585412 
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="The-effect-of-standardization-on-PCA-in-a-pattern-classification-task">
+<a class="anchor" href="#The-effect-of-standardization-on-PCA-in-a-pattern-classification-task" aria-hidden="true"><span class="octicon octicon-link"></span></a>The effect of standardization on PCA in a pattern classification task<a class="anchor-link" href="#The-effect-of-standardization-on-PCA-in-a-pattern-classification-task"> </a>
+</h1>
+<p>Previous chapter we have mentioned the <code>Principal Component Analysis(PCA)</code> as an example where standardization is crucial, since it is <em>analyzing</em> the variances of the different features. Now, let's see how the standardization affects <code>PCA</code> and a following supervised classification on the whole wine dataset.</p>
+<p>We will go through the following steps:</p>
+<ul>
+<li>
+<code>read_csv</code> the whole dataset</li>
+<li>
+<code>train_test_split</code> split the dataset into <code>training</code> set and <code>testing</code> set. </li>
+<li>Standardization the features</li>
+<li>
+<code>PCA</code> to reduce dimensionality</li>
+<li>Train a classifier</li>
+<li>Evaluate the performance <strong>with</strong> and <strong>without</strong> standardization. </li>
+</ul>
+<h2 id="Read-full-dataset">
+<a class="anchor" href="#Read-full-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Read full dataset<a class="anchor-link" href="#Read-full-dataset"> </a>
+</h2>
+<hr>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 178 entries, 0 to 177
+Data columns (total 14 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   0       178 non-null    int64  
+ 1   1       178 non-null    float64
+ 2   2       178 non-null    float64
+ 3   3       178 non-null    float64
+ 4   4       178 non-null    float64
+ 5   5       178 non-null    int64  
+ 6   6       178 non-null    float64
+ 7   7       178 non-null    float64
+ 8   8       178 non-null    float64
+ 9   9       178 non-null    float64
+ 10  10      178 non-null    float64
+ 11  11      178 non-null    float64
+ 12  12      178 non-null    float64
+ 13  13      178 non-null    int64  
+dtypes: float64(11), int64(3)
+memory usage: 19.6 KB
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>11</th>
+      <th>12</th>
+      <th>13</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>14.23</td>
+      <td>1.71</td>
+      <td>2.43</td>
+      <td>15.6</td>
+      <td>127</td>
+      <td>2.80</td>
+      <td>3.06</td>
+      <td>0.28</td>
+      <td>2.29</td>
+      <td>5.64</td>
+      <td>1.04</td>
+      <td>3.92</td>
+      <td>1065</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>13.20</td>
+      <td>1.78</td>
+      <td>2.14</td>
+      <td>11.2</td>
+      <td>100</td>
+      <td>2.65</td>
+      <td>2.76</td>
+      <td>0.26</td>
+      <td>1.28</td>
+      <td>4.38</td>
+      <td>1.05</td>
+      <td>3.40</td>
+      <td>1050</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>13.16</td>
+      <td>2.36</td>
+      <td>2.67</td>
+      <td>18.6</td>
+      <td>101</td>
+      <td>2.80</td>
+      <td>3.24</td>
+      <td>0.30</td>
+      <td>2.81</td>
+      <td>5.68</td>
+      <td>1.03</td>
+      <td>3.17</td>
+      <td>1185</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>14.37</td>
+      <td>1.95</td>
+      <td>2.50</td>
+      <td>16.8</td>
+      <td>113</td>
+      <td>3.85</td>
+      <td>3.49</td>
+      <td>0.24</td>
+      <td>2.18</td>
+      <td>7.80</td>
+      <td>0.86</td>
+      <td>3.45</td>
+      <td>1480</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>13.24</td>
+      <td>2.59</td>
+      <td>2.87</td>
+      <td>21.0</td>
+      <td>118</td>
+      <td>2.80</td>
+      <td>2.69</td>
+      <td>0.39</td>
+      <td>1.82</td>
+      <td>4.32</td>
+      <td>1.04</td>
+      <td>2.93</td>
+      <td>735</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Spliting-the-dataset-into-train-set-and-test-set">
+<a class="anchor" href="#Spliting-the-dataset-into-train-set-and-test-set" aria-hidden="true"><span class="octicon octicon-link"></span></a>Spliting the dataset into <code>train</code> set and <a href="/turbo-funicular/images/copied_from_nb/test"><code>test</code></a> set<a class="anchor-link" href="#Spliting-the-dataset-into-train-set-and-test-set"> </a>
+</h2>
+<p>We will use <code>sklearn</code>'s <code>train_test_split</code> function to randomly split the wine dataset into <code>training</code> set and <a href="/turbo-funicular/images/copied_from_nb/test"><code>test</code></a> set where the <code>training</code> set will contain <code>70%</code> of the samples and the <a href="/turbo-funicular/images/copied_from_nb/test"><code>test</code></a> set will contain <code>30%</code> respectively.</p>
+<hr>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The shape of X_train is: </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The shape of X_test is </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The shape of X_train is: (124, 13)
+
+The shape of X_test is (54, 13)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Feature-Scaling----Standardization">
+<a class="anchor" href="#Feature-Scaling----Standardization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature Scaling -- Standardization<a class="anchor-link" href="#Feature-Scaling----Standardization"> </a>
+</h2>
+<hr>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">preprocessing</span>
+
+<span class="n">std_scale</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_train_std</span> <span class="o">=</span> <span class="n">std_scale</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_std</span> <span class="o">=</span> <span class="n">std_scale</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Dimensionality-reduction-via-Principal-Component-Analysis(PCA)">
+<a class="anchor" href="#Dimensionality-reduction-via-Principal-Component-Analysis(PCA)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dimensionality reduction via Principal Component Analysis(PCA)<a class="anchor-link" href="#Dimensionality-reduction-via-Principal-Component-Analysis(PCA)"> </a>
+</h2>
+<p>Now, we perform PCA on the <code>standardized</code> and the <code>non-standardized</code> datasets to transform the dataset onto a <strong>2-dimensional</strong> feature subspace.</p>
+<p>In a real application, a procedure like cross-validation would be done in order to find out what choice of features would yield a optimal balance between <strong>Preserving Information</strong> and <strong>Overfitting</strong> for different classfiers. However, we will omit this step since we don't want to train a perfect classifier here, but merely compare the effects of <code>standardization</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+
+<span class="c1"># on non-standardized data</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+
+<span class="c1"># om standardized data</span>
+<span class="n">pca_std</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_std</span><span class="p">)</span>
+<span class="n">X_train_std</span> <span class="o">=</span> <span class="n">pca_std</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train_std</span><span class="p">)</span>
+<span class="n">X_test_std</span> <span class="o">=</span> <span class="n">pca_std</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test_std</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let us quickly visualize how our new feature subspace looks like (note that class labels are not considered in a PCA - in contrast to a Linear Discriminant Analysis - but I will add them in the plot for clarity).</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+
+
+<span class="k">for</span> <span class="n">l</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">m</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s1">'blue'</span><span class="p">,</span> <span class="s1">'red'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'^'</span><span class="p">,</span> <span class="s1">'s'</span><span class="p">,</span> <span class="s1">'o'</span><span class="p">)):</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">y_train</span><span class="o">==</span><span class="n">l</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[</span><span class="n">y_train</span><span class="o">==</span><span class="n">l</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">'class </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span><span class="k">l</span>,
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="n">m</span>
+        <span class="p">)</span>
+
+<span class="k">for</span> <span class="n">l</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">m</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s1">'blue'</span><span class="p">,</span> <span class="s1">'red'</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'^'</span><span class="p">,</span> <span class="s1">'s'</span><span class="p">,</span> <span class="s1">'o'</span><span class="p">)):</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_train_std</span><span class="p">[</span><span class="n">y_train</span><span class="o">==</span><span class="n">l</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train_std</span><span class="p">[</span><span class="n">y_train</span><span class="o">==</span><span class="n">l</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">'class </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span><span class="k">l</span>,
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="n">m</span>
+        <span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Transformed NON-standardized training dataset after PCA'</span><span class="p">)</span>    
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Transformed standardized training dataset after PCA'</span><span class="p">)</span>    
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">):</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'1st principal component'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'2nd principal component'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">'upper right'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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wzAMw0gBM6QNw8hLqqurWbRoUdrr3bVrF5/85CeZPn06hx122ICp8gzDMIz81ckWI20MHpukYQwxFixYwPHHH09nZycnnngiTz31FKeddlq2xTIMwxiSZFMnmyFtDB6bpGEkik8vXffeey+LFi1CVZk1axb33Xdfn/133nknd9xxB52dnRxyyCHcd9997LXXXjz88MN8//vfp7CwkNLSUv7617+yevVqvvSlL9HZ2Ulvby+PPvoo06ZN213XXnvtxfHHHw/AiBEjOPLII6mvr09Z9lxARIqBvwJFuOfGI6oaf4UEw8glysujP7NCa2fnKz7rZBGhoqJiUDp5zZo1XHrppYHVyWZIG4aROXx46Vq9ejXXX389L7zwAkVFRXR1dfU7pqqqiq985SsAXH311dx1111cdtllXHvttTz99NNMnDiRpqYmAG6//XauuOIKzj//fDo7O+np6YnZdlNTE3/4wx+44oorUpY/R+gATlDVVhEZDjwvIk+p6kvZFsww0sJQHT31WSePHTuW7du39zsmGZ181113BVonmyFtGEZOs2zZMs4++2zGjh1LS0sL++yzT79jVq1axdVXX01TUxOtra2ccsopABx77LHMnz+fc845h6qqKgCOPvpobrjhBurr66mqqurj+Qinu7ubz3/+81x++eVMnTrVvw4GAFVVoNXbHO59NHsSGVnHQvqMGITrZGDQOnnOnDnceOONgdXJZkgbhpH3zJ8/n8cee4yZM2dyzz33UFNTAzjv88svv8yTTz7JUUcdxYoVKzjvvPOYO3cuTz75JKeffjq//OUvOeGEE/rVefHFFzNt2jS+8Y1vZLYzWUJECoEVwCHAbar6csT+i4GLAcaPH7/7HKeT1tZWX+rNBQLX9+nTYebM/uUdHWDXPu0k0//S0lJaWloSOra4q4vejo5+5QVdXbQnWEck7e3tdHZ29pOho6OD4cOH09LSwrx58/jtb3/L4YcfzgMPPMDf/vY3Wlpa+OEPf8jf//53nn76aY488kiee+45Pve5zzF79myefvppTj31VH76059y3HHH9Wv3a1/7GgceeCAXXXRRzP63t7en/T4yQ9owjJzmhBNO4LOf/SxXXnklI0aMYPv27f08IC0tLUyYMIGuri4eeOABJk6cCMBbb73F3LlzmTt3Lk899RQbNmygubmZqVOncvnll1NXV0dt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%0A">
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Before we train a classifier to classifi the class, we can see clearly from the plot that, on the left, the <code>training</code> set <strong>without Standardization</strong> , would be difficult to find the decision boundary. But on the right, the <code>training</code> set <strong>with Standardization</strong>, the decision boundary is much clearer than left one.</p>
+<h2 id="Train-a-naive-Bayes-Classifier">
+<a class="anchor" href="#Train-a-naive-Bayes-Classifier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Train a naive Bayes Classifier<a class="anchor-link" href="#Train-a-naive-Bayes-Classifier"> </a>
+</h2>
+<p>We will use a naive Bayes classifier for the classification task. If you not familiar with it, the term <strong>naive</strong> comes from the assumption that all features are <strong>independent</strong> with no interference at all, which almost impossible in real-world. 
+it works based on Bayes' Rule:</p>
+<p>
+$$P(w_j | x) = \frac{p(x | w_j) \times P(w_j)}{p(x)}$$
+</p>
+<p>where:</p>
+<ul>
+<li>$w$: class label. </li>
+<li>$P(w|x)$: posterior probability</li>
+<li>$p(x|w)$: prior probability (or likelihood)</li>
+</ul>
+<p>And the <strong>Decesion Rule:</strong></p>
+<p>
+$$w_1$$ if $$P(w_1|x) &gt; P(w_2|x)$$ else $$w_2$$
+</p>
+<p>
+$$=\frac{p(x|w_1) \times P(w_1)}{p(x)} &gt; \frac{p(x|w_2) \times P(w_2)}{p(x)}$$
+</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+
+<span class="c1"># on non-standardized data</span>
+<span class="n">gnb</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">gnb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># on standardized data</span>
+<span class="n">gnb_std</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">gnb_std</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_std</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>GaussianNB()</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
+
+<span class="n">pred_train</span> <span class="o">=</span> <span class="n">gnb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Prediction accuracy for the training dataset without Standardization'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">{:.2%}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">pred_train</span><span class="p">)))</span>
+
+<span class="n">pred_test</span> <span class="o">=</span> <span class="n">gnb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Prediction accuracy for the test dataset without Standardization'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">{:.2%}</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred_test</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Prediction accuracy for the training dataset without Standardization
+81.45%
+
+Prediction accuracy for the test dataset without Standardization
+64.81%
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pred_train_std</span> <span class="o">=</span> <span class="n">gnb_std</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train_std</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Prediction accuracy for the training dataset with Standardization'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">{:.2%}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">pred_train_std</span><span class="p">)))</span>
+
+<span class="n">pred_test_std</span> <span class="o">=</span> <span class="n">gnb_std</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_std</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Prediction accuracy for the test dataset with Standardization'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">{:.2%}</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred_test_std</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Prediction accuracy for the training dataset with Standardization
+96.77%
+
+Prediction accuracy for the test dataset with Standardization
+98.15%
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Other-Classifier">
+<a class="anchor" href="#Other-Classifier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other Classifier<a class="anchor-link" href="#Other-Classifier"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">clf_std</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+<span class="n">clf_std</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_std</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>DecisionTreeClassifier()</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pred_train_clf</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Prediction accuracy for the training dataset without Standardization"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">pred_train_clf</span><span class="p">)</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Prediction accuracy for the training dataset without Standardization
+100.00%
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pred_train_clf_test</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Prediction accuracy for the test dataset without Standardization"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred_train_clf_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Prediction accuracy for the test dataset without Standardization
+68.52%
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pred_train_clf_std</span> <span class="o">=</span> <span class="n">clf_std</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train_std</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Prediction Accuracy for the training dataset with Standardization'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">pred_train_clf_std</span><span class="p">)</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Prediction Accuracy for the training dataset with Standardization
+100.00%
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pred_train_clf_std_test</span> <span class="o">=</span> <span class="n">clf_std</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_std</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Prediction Accuracy for the test dataset with Standardization'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred_train_clf_std_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Prediction Accuracy for the test dataset with Standardization
+96.30%
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As we can see, the standardization prior to the PCA definitely led to an decrease in the empirical error rate on classifying samples from test dataset.</p>
+<p>In <strong>Naive Bayes</strong> Classifier, before <strong>Standardization</strong> classifier after <code>PCA</code> perform to around $64.81\%$ accuracy, after <strong>Standardization</strong>, performance increase to $98.15\%$</p>
+<p>Similar to <code>DecesionTreeClassifier</code>, test set performance increase from $68.52\%$ to $96.30\%$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Appendix:-The-effect-of-scaling-and-mean-centering-of-variable-prior-to-PCA">
+<a class="anchor" href="#Appendix:-The-effect-of-scaling-and-mean-centering-of-variable-prior-to-PCA" aria-hidden="true"><span class="octicon octicon-link"></span></a>Appendix: The effect of scaling and mean centering of variable prior to PCA<a class="anchor-link" href="#Appendix:-The-effect-of-scaling-and-mean-centering-of-variable-prior-to-PCA"> </a>
+</h1>
+<hr>
+<h2 id="Mean-centering-does-not-affect-the-covariance-matrix">
+<a class="anchor" href="#Mean-centering-does-not-affect-the-covariance-matrix" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mean centering does not affect the covariance matrix<a class="anchor-link" href="#Mean-centering-does-not-affect-the-covariance-matrix"> </a>
+</h2>
+<p>Here, the rational is: If the covariance is the same whether the variables are centered or not, the result of the PCA will be the same.</p>
+<p>Let’s assume we have the 2 variables $x$ and $y$. Then the covariance between the attributes is calculated as</p>
+<p>
+$$\sigma_{xy} = \frac{1}{N-1}\sum_i^n(x_i - \bar{x})(y_i - \bar{y})$$
+</p>
+<p>Let's write the centered variables as: 
+
+$$x^{'}= x - \bar{x}$$
+
+And
+
+$$y^{'}= y - \bar{y}$$
+</p>
+<p>The centered covariance would then be calculated as follows:
+
+$$\sigma^{'}_{xy} = \frac{1}{n-1}\sum_i^n(x^{'}_i - \bar{x}^{'})(y^{'}_i - \bar{y}^{'})$$
+</p>
+<p>But since after centering, $\bar{x}^{'}=0$ and $\bar{y}^{'}=0$ we have $\sigma^{'}_{xy} = \frac{1}{n-1}\sum^n_ix_i^{'}y_i^{'}$ which is our original convariance matrix if we resubstitute back the terms $x^{'}=x - \bar{x}$ and $y^{'} = y - \bar{y}$</p>
+<p>Even centering only one variable, let's say $X$ wouldn't affect the covariance:</p>
+<p>
+$$\sigma_{xy} = \frac{1}{n-1}\sum_i^n(x_i^{'} - \bar{x}^{'})(y_i - \bar{y})$$
+
+
+$$=\frac{1}{n-1}\sum_i^n(x_i^{'} - 0)(y_i - \bar{y})$$
+
+
+$$=\frac{1}{n-1}\sum_i^n(x_i - \bar{x})(y_i - \bar{y})$$
+</p>
+<h2 id="Scaling-of-variables-does-affect-the-covariance-matrix">
+<a class="anchor" href="#Scaling-of-variables-does-affect-the-covariance-matrix" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scaling of variables does affect the covariance matrix<a class="anchor-link" href="#Scaling-of-variables-does-affect-the-covariance-matrix"> </a>
+</h2>
+<p>Content Placeholder</p>
+<h2 id="Standardizing-affects-the-covariance">
+<a class="anchor" href="#Standardizing-affects-the-covariance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Standardizing affects the covariance<a class="anchor-link" href="#Standardizing-affects-the-covariance"> </a>
+</h2>
+<p>Content Placeholder</p>
+
+</div>
+</div>
+</div>
 </div>
 
 
