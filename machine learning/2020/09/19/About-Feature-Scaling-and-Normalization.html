@@ -109,7 +109,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      16 min read
+      17 min read
     
 </span></p>
 
@@ -1772,11 +1772,52 @@ $$=\frac{1}{n-1}\sum_i^n(x_i - \bar{x})(y_i - \bar{y})$$
 <h2 id="Scaling-of-variables-does-affect-the-covariance-matrix">
 <a class="anchor" href="#Scaling-of-variables-does-affect-the-covariance-matrix" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scaling of variables does affect the covariance matrix<a class="anchor-link" href="#Scaling-of-variables-does-affect-the-covariance-matrix"> </a>
 </h2>
-<p>Content Placeholder</p>
+<p>If one variable is scaled, e.g., from Pounds into Kilogram ($1$ pound = $0.453591$ kg), it does affect the covariance and therefore influences the result of PCA.</p>
+<p>Let $c$ be the scaling factor for $X$
+Given that the <strong>original</strong> covariance is computed as: 
+
+$$\sigma_{xy} = \frac{1}{n - 1}\sum_i^n(x_i - \bar{x})(y_i - \bar{y})$$
+</p>
+<p>the covariance after scaling would be computed as: 
+
+$$\sigma_{xy}^{'} = \frac{1}{n-1}\sum_i^n(c \times x_i - c \times \bar{x})(y_i - \bar{y})$$
+
+
+$$=\frac{c}{n-1}\sum_i^n(x_i - \bar{x})(y_i - \bar{y})$$
+</p>
+<p>So we have:
+
+$$\sigma_{xy} = \frac{\sigma_{xy}^{'}}{c} = C \times \sigma_{xy}$$
+</p>
+<p>Therefore, the covariance after scaling one attribute by the constant $c$ will result in a rescaled covariance $c\sigma_{xy}$ So if we'd scaled $X$ from pounds to kilograms, the covariance between $X$ and $Y$ will be $0.453592$ times smaller.</p>
 <h2 id="Standardizing-affects-the-covariance">
 <a class="anchor" href="#Standardizing-affects-the-covariance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Standardizing affects the covariance<a class="anchor-link" href="#Standardizing-affects-the-covariance"> </a>
 </h2>
-<p>Content Placeholder</p>
+<p>Standardization of features will have an effect on the outcome of a PCA (assuming that the variables are originally not standardized). This is because we are scaling the covariance between every pair of variables by the product of the standard deviations of each pair of variables.</p>
+<p>The equation for standardization of a variable is written as</p>
+<p>
+$$z=\frac{x_i - \bar{x}}{\sigma}$$
+</p>
+<p>The <strong>Original</strong> covariance matrix:</p>
+<p>
+$$\sigma_{xy} = \frac{1}{n-1}\sum_i^n(x_i - \bar{x})(y_i - \bar{y})$$
+</p>
+<p>And after standardizing both variables:</p>
+<p>
+$$x^{'} = \frac{x - \bar{x}}{\sigma_x}$$ and $$y^{'}=\frac{y-\bar{y}}{\sigma_y}$$
+</p>
+<p>
+$$\sigma^{'}_{xy} = \frac{1}{n-1}\sum_i^n(x_i^{'} - 0)(y_i^{'}-0)$$
+
+
+$$=\frac{1}{n-1}\sum_i^n(\frac{x-\bar{x}}{\sigma_x})(\frac{y-\bar{y}}{\sigma_y})$$
+
+
+$$=\frac{1}{(n-1) \times \sigma_x\sigma_y}\sum_i^n(x_i - \bar{x})(y_i - \bar{y})$$
+
+
+$$=\frac{\sigma_{xy}}{\sigma_x\sigma_y}$$
+</p>
 
 </div>
 </div>
