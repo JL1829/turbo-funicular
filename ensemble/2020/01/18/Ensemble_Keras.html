@@ -3,9 +3,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>How to develop a Stacking Ensemble for Deep Learning Neural Networks in Python with Keras | Johnny’s Machine Learning Blog</title>
-<meta name="generator" content="Jekyll v4.0.0" />
+<meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="How to develop a Stacking Ensemble for Deep Learning Neural Networks in Python with Keras" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="A tutorial of how to use Ensemble Method to stack multiple classifier." />
@@ -16,26 +16,10 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-01-18T00:00:00-06:00" />
 <script type="application/ld+json">
-{"headline":"How to develop a Stacking Ensemble for Deep Learning Neural Networks in Python with Keras","description":"A tutorial of how to use Ensemble Method to stack multiple classifier.","datePublished":"2020-01-18T00:00:00-06:00","dateModified":"2020-01-18T00:00:00-06:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/ensemble/2020/01/18/Ensemble_Keras.html"},"url":"https://johdev.com/ensemble/2020/01/18/Ensemble_Keras.html","@context":"https://schema.org"}</script>
+{"description":"A tutorial of how to use Ensemble Method to stack multiple classifier.","url":"https://johdev.com/ensemble/2020/01/18/Ensemble_Keras.html","@type":"BlogPosting","headline":"How to develop a Stacking Ensemble for Deep Learning Neural Networks in Python with Keras","dateModified":"2020-01-18T00:00:00-06:00","datePublished":"2020-01-18T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/ensemble/2020/01/18/Ensemble_Keras.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>How to develop a Stacking Ensemble for Deep Learning Neural Networks in Python with Keras | Johnny’s Machine Learning Blog</title>
-<meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="How to develop a Stacking Ensemble for Deep Learning Neural Networks in Python with Keras" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="A tutorial of how to use Ensemble Method to stack multiple classifier." />
-<meta property="og:description" content="A tutorial of how to use Ensemble Method to stack multiple classifier." />
-<link rel="canonical" href="https://johdev.com/ensemble/2020/01/18/Ensemble_Keras.html" />
-<meta property="og:url" content="https://johdev.com/ensemble/2020/01/18/Ensemble_Keras.html" />
-<meta property="og:site_name" content="Johnny’s Machine Learning Blog" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-01-18T00:00:00-06:00" />
-<script type="application/ld+json">
-{"headline":"How to develop a Stacking Ensemble for Deep Learning Neural Networks in Python with Keras","description":"A tutorial of how to use Ensemble Method to stack multiple classifier.","datePublished":"2020-01-18T00:00:00-06:00","dateModified":"2020-01-18T00:00:00-06:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/ensemble/2020/01/18/Ensemble_Keras.html"},"url":"https://johdev.com/ensemble/2020/01/18/Ensemble_Keras.html","@context":"https://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
-
-<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
-<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" />
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
@@ -238,7 +222,7 @@ window.onload = wrap_img;
 </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cluster_std</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># scatter plot, dots colored by class value
-</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">y</span><span class="p">))</span>
+</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">y</span><span class="p">))</span>
 </code></pre></div></div>
 
 <p>The results are the input and output elements of a dataset that we can model.</p>
@@ -246,11 +230,11 @@ window.onload = wrap_img;
 <p>In order to get a feeling for the complexity of the problem, we can graph each point on a two-dimensional scatter plot and color each point by class value.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">colors</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s">'red'</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s">'blue'</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s">'green'</span><span class="p">}</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">grouded</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'label'</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">grouded</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'label'</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">grouded</span><span class="p">:</span>
-    <span class="n">group</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s">'scatter'</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">'x'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'y'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">group</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s">'scatter'</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">'x'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'y'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p><img src="/images/output_4_0.svg" alt="plot"></p>
@@ -268,12 +252,12 @@ window.onload = wrap_img;
 
 <p>We will create 1,100 data points from the blobs problem. The model will be trained on the first 100 points and the remaining 1,000 will be held back in a test dataset, unavailable to the model.</p>
 
-<p>The problem is a multi-class classification problem, and we will model it using a softmax activation function on the output layer. This means that the model will predict a vector with three elements with the probability that the sample belongs to each of the three classes. Therefore, we must one hot encode the class values before we split the rows into the train and test datasets. We can do this using the Keras <code class="highlighter-rouge">to_categorical()</code> function.</p>
+<p>The problem is a multi-class classification problem, and we will model it using a softmax activation function on the output layer. This means that the model will predict a vector with three elements with the probability that the sample belongs to each of the three classes. Therefore, we must one hot encode the class values before we split the rows into the train and test datasets. We can do this using the Keras <code class="language-plaintext highlighter-rouge">to_categorical()</code> function.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># use PlaidML as backend intead of default TensorFlow, 
 # so that can utilize the power of MacBook Pro's AMD GPU
 </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">"KERAS_BACKEND"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"plaidml.keras.backend"</span>
+<span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="s">"KERAS_BACKEND"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"plaidml.keras.backend"</span>
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># import the modules
@@ -282,7 +266,7 @@ window.onload = wrap_img;
 <span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Using plaidml.keras.backend backend.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Using plaidml.keras.backend backend.
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># generate 2d clasification dataset
@@ -295,10 +279,10 @@ window.onload = wrap_img;
 </span><span class="n">n_train</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span><span class="n">n_train</span><span class="p">,</span> <span class="p">:],</span> <span class="n">X</span><span class="p">[</span><span class="n">n_train</span><span class="p">:,</span> <span class="p">:]</span>
 <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="n">n_train</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">n_train</span><span class="p">:]</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"The shape of X train set is {X_train.shape}, the shape of X test set is {X_test.shape}."</span><span class="p">)</span> 
+<span class="k">print</span><span class="p">(</span><span class="s">f"The shape of X train set is </span><span class="si">{</span><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="s">, the shape of X test set is </span><span class="si">{</span><span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="s">."</span><span class="p">)</span> 
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The shape of X train set is (100, 2), the shape of X test set is (1000, 2).
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The shape of X train set is (100, 2), the shape of X test set is (1000, 2).
 </code></pre></div></div>
 
 <p>Next, we can define and combine the model.</p>
@@ -309,53 +293,53 @@ window.onload = wrap_img;
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># define model
 </span><span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'softmax'</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'categorical_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'softmax'</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'categorical_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO:plaidml:Opening device "metal_amd_radeon_pro_560x.0"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO:plaidml:Opening device "metal_amd_radeon_pro_560x.0"
 </code></pre></div></div>
 
 <p>The model is fit for 500 training epochs and we will evaluate the model each epoch on the test set, using the test set as validation set</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># fit the model
-</span><span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">),</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">),</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Epoch 150/150
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Epoch 150/150
 100/100 [==============================] - 0s 1ms/step - loss: 0.4755 - acc: 0.7900 - val_loss: 0.5328 - val_acc: 0.7800
 </code></pre></div></div>
 
 <p>At the end of the run, we will evaluate the performance of the model on the train and test sets.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># evaluate the model
-</span><span class="n">_</span><span class="p">,</span> <span class="n">train_acc</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="n">_</span><span class="p">,</span> <span class="n">train_acc</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>100/100 [==============================] - 0s 450us/step
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>100/100 [==============================] - 0s 450us/step
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># evaluate the model
-</span><span class="n">_</span><span class="p">,</span> <span class="n">test_acc</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="n">_</span><span class="p">,</span> <span class="n">test_acc</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1000/1000 [==============================] - 0s 112us/step
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1000/1000 [==============================] - 0s 112us/step
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"The train accuracy is {train_acc}, and the test accuracy is {test_acc}."</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">f"The train accuracy is </span><span class="si">{</span><span class="n">train_acc</span><span class="si">}</span><span class="s">, and the test accuracy is </span><span class="si">{</span><span class="n">test_acc</span><span class="si">}</span><span class="s">."</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The train accuracy is 0.79, and the test accuracy is 0.78.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The train accuracy is 0.79, and the test accuracy is 0.78.
 </code></pre></div></div>
 
 <p>Then finally, we will plot learning curves of the model accuracy over each training epoch on both the training and validation datasets.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># learning curves of model accuracy
-</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s">'acc'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s">'train'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s">'val_acc'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s">'test'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'acc'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s">'train'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'val_acc'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s">'test'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p><img src="/images/output_19_0.svg" alt="plot_2"></p>
@@ -385,12 +369,12 @@ window.onload = wrap_img;
 </span><span class="k">def</span> <span class="nf">fit_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">):</span>
     <span class="c1"># define the model
 </span>    <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'softmax'</span><span class="p">))</span>
-    <span class="n">model</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'categorical_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'softmax'</span><span class="p">))</span>
+    <span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'categorical_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
     
     <span class="c1"># fit the model
-</span>    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span>    <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">model</span>
 </code></pre></div></div>
@@ -415,11 +399,11 @@ window.onload = wrap_img;
 
     <span class="c1"># save model
 </span>    <span class="n">filename</span> <span class="o">=</span> <span class="s">'models/model_'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s">'.h5'</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"[INFO]&gt;&gt;Save {filename}."</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">f"[INFO]&gt;&gt;Save </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s">."</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO:plaidml:Opening device "metal_amd_radeon_pro_560x.0"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO:plaidml:Opening device "metal_amd_radeon_pro_560x.0"
 [INFO]&gt;&gt;Save models/model_1.h5.
 [INFO]&gt;&gt;Save models/model_2.h5.
 [INFO]&gt;&gt;Save models/model_3.h5.
@@ -430,7 +414,7 @@ window.onload = wrap_img;
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="n">models</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>total 280
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>total 280
 -rw-r--r--  1 johnnylu  staff  27936 Jan 16 12:40 model_1.h5
 -rw-r--r--  1 johnnylu  staff  27936 Jan 16 12:40 model_2.h5
 -rw-r--r--  1 johnnylu  staff  27936 Jan 16 12:40 model_3.h5
@@ -445,7 +429,7 @@ window.onload = wrap_img;
 
 <p>The first step is to load the saved models.</p>
 
-<p>We can use the <code class="highlighter-rouge">load_model()</code> Keras function and create a Python list of loaded models.</p>
+<p>We can use the <code class="language-plaintext highlighter-rouge">load_model()</code> Keras function and create a Python list of loaded models.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">n_members</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">load_model</span>
@@ -459,18 +443,18 @@ window.onload = wrap_img;
         <span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
         <span class="c1"># add to list of members
-</span>        <span class="n">all_models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"[INFO]&gt;&gt;loaded {filename}."</span><span class="p">)</span>
+</span>        <span class="n">all_models</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">f"[INFO]&gt;&gt;loaded </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s">."</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">all_models</span>
 
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># load all models: 
 </span><span class="n">members</span> <span class="o">=</span> <span class="n">load_all_model</span><span class="p">(</span><span class="n">n_members</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"Loaded {len(members)} models."</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">f"Loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">members</span><span class="p">)</span><span class="si">}</span><span class="s"> models."</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[INFO]&gt;&gt;loaded models/model_1.h5.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[INFO]&gt;&gt;loaded models/model_1.h5.
 [INFO]&gt;&gt;loaded models/model_2.h5.
 [INFO]&gt;&gt;loaded models/model_3.h5.
 [INFO]&gt;&gt;loaded models/model_4.h5.
@@ -484,11 +468,11 @@ Loaded 5 models.
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># evaluate standalone models on test dataset
 </span><span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">members</span><span class="p">:</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"Model Test Set Accuracy: {acc}."</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">f"Model Test Set Accuracy: </span><span class="si">{</span><span class="n">acc</span><span class="si">}</span><span class="s">."</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1000/1000 [==============================] - 0s 402us/step
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1000/1000 [==============================] - 0s 402us/step
 Model Test Set Accuracy: 0.78.
 1000/1000 [==============================] - 0s 98us/step
 Model Test Set Accuracy: 0.724.
@@ -507,22 +491,22 @@ Model Test Set Accuracy: 0.752.
   <li>Use the prepared training set to fit a meta-learner model</li>
 </ul>
 
-<p>We will prepare a training dataset for the meta-learner by providing examples from the test set to each of the submodels and collecting the predictions. In this case, each model will output three predictions for each example for the probabilities that a given example belongs to each of the three classes. Therefore, the 1,000 examples in the test set will result in five arrays with the shape <code class="highlighter-rouge">[1000, 3]</code>.</p>
+<p>We will prepare a training dataset for the meta-learner by providing examples from the test set to each of the submodels and collecting the predictions. In this case, each model will output three predictions for each example for the probabilities that a given example belongs to each of the three classes. Therefore, the 1,000 examples in the test set will result in five arrays with the shape <code class="language-plaintext highlighter-rouge">[1000, 3]</code>.</p>
 
-<p>We can combine these arrays into a three-dimensional array with the shape <code class="highlighter-rouge">[1000, 5, 3]</code> by using the <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dstack.html">dstack() numpy function</a>that will stack each new set of predictions</p>
+<p>We can combine these arrays into a three-dimensional array with the shape <code class="language-plaintext highlighter-rouge">[1000, 5, 3]</code> by using the <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dstack.html">dstack() numpy function</a>that will stack each new set of predictions</p>
 
-<p>As input for new model, we will require 1,000 examples with some number of features. Given that we have 5 models and each model makes three predictions per example, then we would have 15 (3 x 5) features for each example provided to the submodels. We can transform the <code class="highlighter-rouge">[1000, 5, 3]</code> shaped predictions from the sub-models into a <code class="highlighter-rouge">[1000, 15]</code> shaped array to be used to train a meta-learner using the <a href="https://machinelearningmastery.com/index-slice-reshape-numpy-arrays-machine-learning-python/">reshape() numpy function</a> and flattening the final two dimensions. The <code class="highlighter-rouge">stacked_dataset()</code> function implements this steps</p>
+<p>As input for new model, we will require 1,000 examples with some number of features. Given that we have 5 models and each model makes three predictions per example, then we would have 15 (3 x 5) features for each example provided to the submodels. We can transform the <code class="language-plaintext highlighter-rouge">[1000, 5, 3]</code> shaped predictions from the sub-models into a <code class="language-plaintext highlighter-rouge">[1000, 15]</code> shaped array to be used to train a meta-learner using the <a href="https://machinelearningmastery.com/index-slice-reshape-numpy-arrays-machine-learning-python/">reshape() numpy function</a> and flattening the final two dimensions. The <code class="language-plaintext highlighter-rouge">stacked_dataset()</code> function implements this steps</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># check the sub-model prediction output shape
-</span><span class="n">test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</span><span class="n">test</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">test</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[[0.87745166 0.00568948 0.11685885]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[[0.87745166 0.00568948 0.11685885]
  [0.00420502 0.08186033 0.91393465]
  [0.0560521  0.27464437 0.66930354]
  ...
@@ -547,19 +531,19 @@ Model Test Set Accuracy: 0.752.
 </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">dstack</span>
 
-<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"The array a is {a}"</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">f"The array a is </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"The array b is {b}"</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">f"The array b is </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
 
 <span class="n">c</span> <span class="o">=</span> <span class="n">dstack</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"dstack: {c}"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"Shape of dstack: {c.shape}"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">f"dstack: </span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">f"Shape of dstack: </span><span class="si">{</span><span class="n">c</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The array a is [1 2 3]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The array a is [1 2 3]
 
 
 The array b is [4 5 6]
@@ -576,14 +560,14 @@ Shape of dstack: (1, 3, 2)
     <span class="n">stackX</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">members</span><span class="p">:</span>
         <span class="c1"># make prediction
-</span>        <span class="n">yhat</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">inputX</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span>        <span class="n">yhat</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">inputX</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="c1"># stack predictions into [rows, members, probabilities]
 </span>        <span class="k">if</span> <span class="n">stackX</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">stackX</span> <span class="o">=</span> <span class="n">yhat</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">stackX</span> <span class="o">=</span> <span class="n">dstack</span><span class="p">((</span><span class="n">stackX</span><span class="p">,</span> <span class="n">yhat</span><span class="p">))</span>
         <span class="c1"># flatten predictions to [rows, members x probabilities]
-</span>    <span class="n">stackX</span> <span class="o">=</span> <span class="n">stackX</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">stackX</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stackX</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">stackX</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+</span>    <span class="n">stackX</span> <span class="o">=</span> <span class="n">stackX</span><span class="p">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">stackX</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stackX</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">stackX</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
     <span class="k">return</span> <span class="n">stackX</span>
 
 </code></pre></div></div>
@@ -591,17 +575,17 @@ Shape of dstack: (1, 3, 2)
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stackX</span> <span class="o">=</span> <span class="n">stacked_dataset</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stackX</span><span class="o">.</span><span class="n">shape</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stackX</span><span class="p">.</span><span class="n">shape</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(1000, 15)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(1000, 15)
 </code></pre></div></div>
 
-<p>Once prepared, we can use this input dataset along with the output, or <code class="highlighter-rouge">y</code> part, of the test set to train a new meta-learner</p>
+<p>Once prepared, we can use this input dataset along with the output, or <code class="language-plaintext highlighter-rouge">y</code> part, of the test set to train a new meta-learner</p>
 
 <p>In this case, we will train a simple logistic regression algorithm from the scikit-learn library</p>
 
-<p><a href="https://machinelearningmastery.com/logistic-regression-for-machine-learning/">Logistic Regression</a> only supports binary classification, although the implementation of logistic regression in scikit-learn in the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html">LogisticRegression class</a> support multi-class classification (more than two classes) using a one-vs-rest scheme. The function <code class="highlighter-rouge">fit_stacked_model()</code> below will prepare the training dataset for meta-learner by calling the <code class="highlighter-rouge">stacked_dataset()</code> function, then fit a logistic regression model that is then returned.</p>
+<p><a href="https://machinelearningmastery.com/logistic-regression-for-machine-learning/">Logistic Regression</a> only supports binary classification, although the implementation of logistic regression in scikit-learn in the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html">LogisticRegression class</a> support multi-class classification (more than two classes) using a one-vs-rest scheme. The function <code class="language-plaintext highlighter-rouge">fit_stacked_model()</code> below will prepare the training dataset for meta-learner by calling the <code class="language-plaintext highlighter-rouge">stacked_dataset()</code> function, then fit a logistic regression model that is then returned.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># import Logistic Regression class
 </span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
@@ -611,7 +595,7 @@ Shape of dstack: (1, 3, 2)
 </span>    <span class="n">stackedX</span> <span class="o">=</span> <span class="n">stacked_dataset</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">inputX</span><span class="p">)</span>
     <span class="c1"># fit standalone mode
 </span>    <span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">stackedX</span><span class="p">,</span> <span class="n">inputy</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">stackedX</span><span class="p">,</span> <span class="n">inputy</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">model</span>
 
@@ -622,7 +606,7 @@ Shape of dstack: (1, 3, 2)
     <span class="c1"># create dataset using ensemble
 </span>    <span class="n">stackedX</span> <span class="o">=</span> <span class="n">stacked_dataset</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">inputX</span><span class="p">)</span>
     <span class="c1"># make a prediction
-</span>    <span class="n">yhat</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">stackedX</span><span class="p">)</span>
+</span>    <span class="n">yhat</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">stackedX</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">yhat</span>
 </code></pre></div></div>
 
@@ -636,31 +620,31 @@ Shape of dstack: (1, 3, 2)
 </span><span class="n">n_train</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span><span class="n">n_train</span><span class="p">,</span> <span class="p">:],</span> <span class="n">X</span><span class="p">[</span><span class="n">n_train</span><span class="p">:,</span> <span class="p">:]</span>
 <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="n">n_train</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">n_train</span><span class="p">:]</span>
-<span class="k">print</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(100, 2) (1000, 2)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(100, 2) (1000, 2)
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
 <span class="c1"># load all models
 </span><span class="n">n_members</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">members</span> <span class="o">=</span> <span class="n">load_all_model</span><span class="p">(</span><span class="n">n_members</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'Loaded </span><span class="si">%</span><span class="s">d models'</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">members</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Loaded %d models'</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">members</span><span class="p">))</span>
 <span class="c1"># evaluate standalone models on test dataset
 </span><span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">members</span><span class="p">:</span>
 	<span class="n">testy_enc</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
-	<span class="n">_</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">testy_enc</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-	<span class="k">print</span><span class="p">(</span><span class="s">'Model Accuracy: </span><span class="si">%.3</span><span class="s">f'</span> <span class="o">%</span> <span class="n">acc</span><span class="p">)</span>
+	<span class="n">_</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">testy_enc</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">'Model Accuracy: %.3f'</span> <span class="o">%</span> <span class="n">acc</span><span class="p">)</span>
 <span class="c1"># fit stacked model using the ensemble
 </span><span class="n">model</span> <span class="o">=</span> <span class="n">fit_stacked_model</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
 <span class="c1"># evaluate model on test set
 </span><span class="n">yhat</span> <span class="o">=</span> <span class="n">stacked_prediction</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
 <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">yhat</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'Stacked Test Accuracy: </span><span class="si">%.3</span><span class="s">f'</span> <span class="o">%</span> <span class="n">acc</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Stacked Test Accuracy: %.3f'</span> <span class="o">%</span> <span class="n">acc</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[INFO]&gt;&gt;loaded models/model_1.h5.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[INFO]&gt;&gt;loaded models/model_1.h5.
 [INFO]&gt;&gt;loaded models/model_2.h5.
 [INFO]&gt;&gt;loaded models/model_3.h5.
 [INFO]&gt;&gt;loaded models/model_4.h5.
@@ -702,26 +686,26 @@ Stacked Test Accuracy: 0.826
 
 <p>Once the sub-models have been prepared, we can define the stacking ensemble model.</p>
 
-<p>The input layer for each of the sub-models will be used as separete input head to this new model. This means that <code class="highlighter-rouge">k</code> copies of any input data will have to be provided to the model, where <code class="highlighter-rouge">k</code> is the number of input models, in this case, <code class="highlighter-rouge">k = 5</code>.</p>
+<p>The input layer for each of the sub-models will be used as separete input head to this new model. This means that <code class="language-plaintext highlighter-rouge">k</code> copies of any input data will have to be provided to the model, where <code class="language-plaintext highlighter-rouge">k</code> is the number of input models, in this case, <code class="language-plaintext highlighter-rouge">k = 5</code>.</p>
 
-<p>The outputs of each of the models can then be merged. In this case, we will use a simple concatenation merge, where a single 15-elememts vector will be created from the 3 class-probabilities predicted by each of the <code class="highlighter-rouge">5</code> models.</p>
+<p>The outputs of each of the models can then be merged. In this case, we will use a simple concatenation merge, where a single 15-elememts vector will be created from the 3 class-probabilities predicted by each of the <code class="language-plaintext highlighter-rouge">5</code> models.</p>
 
-<p>We will then define a hidden layer to interpret this <code class="highlighter-rouge">input</code> to the meta-learner and an output layer that will make its own probabilistic prediction. The <code class="highlighter-rouge">define_stacked_model()</code> function below implements this and will return a stacked generalization neural network model given a list of trained sub-models.</p>
+<p>We will then define a hidden layer to interpret this <code class="language-plaintext highlighter-rouge">input</code> to the meta-learner and an output layer that will make its own probabilistic prediction. The <code class="language-plaintext highlighter-rouge">define_stacked_model()</code> function below implements this and will return a stacked generalization neural network model given a list of trained sub-models.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># define stacked model from multiple member input models
 </span><span class="k">def</span> <span class="nf">define_stacked_model</span><span class="p">(</span><span class="n">members</span><span class="p">):</span>
     <span class="c1"># update all layers in all models to not be trainable
 </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">members</span><span class="p">)):</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">members</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="n">layers</span><span class="p">:</span>
             <span class="c1"># make not trainable
-</span>            <span class="n">layer</span><span class="o">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="bp">False</span>
+</span>            <span class="n">layer</span><span class="p">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="bp">False</span>
             <span class="c1"># rename to avoid 'unique layer name' issue
-</span>            <span class="n">layer</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ensemble_'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s">'_'</span> <span class="o">+</span> <span class="n">layer</span><span class="o">.</span><span class="n">name</span>
+</span>            <span class="n">layer</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">'ensemble_'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s">'_'</span> <span class="o">+</span> <span class="n">layer</span><span class="p">.</span><span class="n">name</span>
     <span class="c1"># define multi-headed input
-</span>    <span class="n">ensemble_visible</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="nb">input</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">members</span><span class="p">]</span>
+</span>    <span class="n">ensemble_visible</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="p">.</span><span class="nb">input</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">members</span><span class="p">]</span>
     <span class="c1"># concatenate merge output from each model
-</span>    <span class="n">ensemble_outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">output</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">members</span><span class="p">]</span>
+</span>    <span class="n">ensemble_outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="p">.</span><span class="n">output</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">members</span><span class="p">]</span>
     <span class="n">merge</span> <span class="o">=</span> <span class="n">concatenate</span><span class="p">(</span><span class="n">ensemble_outputs</span><span class="p">)</span>
     <span class="n">hidden</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">)(</span><span class="n">merge</span><span class="p">)</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'softmax'</span><span class="p">)(</span><span class="n">hidden</span><span class="p">)</span>
@@ -729,7 +713,7 @@ Stacked Test Accuracy: 0.826
     <span class="c1"># plot graph of ensemble
 </span>    <span class="n">plot_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">show_shapes</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">to_file</span><span class="o">=</span><span class="s">'model_graph.png'</span><span class="p">)</span>
     <span class="c1"># complie
-</span>    <span class="n">model</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'categorical_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
+</span>    <span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'categorical_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
 
     <span class="k">return</span> <span class="n">model</span>
 </code></pre></div></div>
@@ -741,28 +725,28 @@ Stacked Test Accuracy: 0.826
 
 <p>Once the model is defined, it can be fit. We can fit it directly on the holdout test dataset.</p>
 
-<p>Because the sub-models are not trainable, their weights wil not be updated during training and only the weights of the new hidden and output layer will be updated. The <code class="highlighter-rouge">fit_stacked_model()</code> function below will fit the stacking neural network model on for <code class="highlighter-rouge">300</code> epochs.</p>
+<p>Because the sub-models are not trainable, their weights wil not be updated during training and only the weights of the new hidden and output layer will be updated. The <code class="language-plaintext highlighter-rouge">fit_stacked_model()</code> function below will fit the stacking neural network model on for <code class="language-plaintext highlighter-rouge">300</code> epochs.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># fit a stacked model
 </span><span class="k">def</span> <span class="nf">fit_stacked_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">inputX</span><span class="p">,</span> <span class="n">inputy</span><span class="p">):</span>
     <span class="c1"># prepare input data
-</span>    <span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="n">inputX</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="nb">input</span><span class="p">))]</span>
+</span>    <span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="n">inputX</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nb">input</span><span class="p">))]</span>
     <span class="c1"># encode y variable
 </span>    <span class="n">inputy_enc</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">inputy</span><span class="p">)</span>
     <span class="c1"># fit the mode
-</span>    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">inputy_enc</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span>    <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">inputy_enc</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Once fit, we can use the new stacked model to make a prediction on new data.</p>
 
-<p>This is as simple as calling the <code class="highlighter-rouge">predict()</code> function on the model. One minor change is that we require <code class="highlighter-rouge">k</code> copies of the input data in a list to be provided to the model for each of the <code class="highlighter-rouge">k</code> sub-models. the <code class="highlighter-rouge">predict_stacked_model()</code> function below simplifies this process of making a prediction with the stacking model.</p>
+<p>This is as simple as calling the <code class="language-plaintext highlighter-rouge">predict()</code> function on the model. One minor change is that we require <code class="language-plaintext highlighter-rouge">k</code> copies of the input data in a list to be provided to the model for each of the <code class="language-plaintext highlighter-rouge">k</code> sub-models. the <code class="language-plaintext highlighter-rouge">predict_stacked_model()</code> function below simplifies this process of making a prediction with the stacking model.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># make a prediction with a stacked model
 </span><span class="k">def</span> <span class="nf">predict_stacked_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">inputX</span><span class="p">):</span>
     <span class="c1"># prepare input data
-</span>    <span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="n">inputX</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="nb">input</span><span class="p">))]</span>
+</span>    <span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="n">inputX</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nb">input</span><span class="p">))]</span>
     <span class="c1"># make prediction
-</span>    <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span>    <span class="k">return</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     
 </code></pre></div></div>
 
@@ -778,7 +762,7 @@ Stacked Test Accuracy: 0.826
 <span class="c1"># load all models
 </span><span class="n">n_members</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">members</span> <span class="o">=</span> <span class="n">load_all_model</span><span class="p">(</span><span class="n">n_members</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'Loaded </span><span class="si">%</span><span class="s">d models'</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">members</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Loaded %d models'</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">members</span><span class="p">))</span>
 <span class="c1"># define ensemble model
 </span><span class="n">stacked_model</span> <span class="o">=</span> <span class="n">define_stacked_model</span><span class="p">(</span><span class="n">members</span><span class="p">)</span>
 <span class="c1"># fit stacked model on test dataset
@@ -787,10 +771,10 @@ Stacked Test Accuracy: 0.826
 </span><span class="n">yhat</span> <span class="o">=</span> <span class="n">predict_stacked_model</span><span class="p">(</span><span class="n">stacked_model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
 <span class="n">yhat</span> <span class="o">=</span> <span class="n">argmax</span><span class="p">(</span><span class="n">yhat</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">yhat</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'Stacked Test Accuracy: </span><span class="si">%.3</span><span class="s">f'</span> <span class="o">%</span> <span class="n">acc</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Stacked Test Accuracy: %.3f'</span> <span class="o">%</span> <span class="n">acc</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[INFO]&gt;&gt;loaded models/model_1.h5.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[INFO]&gt;&gt;loaded models/model_1.h5.
 [INFO]&gt;&gt;loaded models/model_2.h5.
 [INFO]&gt;&gt;loaded models/model_3.h5.
 [INFO]&gt;&gt;loaded models/model_4.h5.

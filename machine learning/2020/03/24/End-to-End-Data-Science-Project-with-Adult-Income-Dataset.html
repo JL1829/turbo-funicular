@@ -3,9 +3,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>End-to-End Data Science Project with Adult Income Dataset | Johnny’s Machine Learning Blog</title>
-<meta name="generator" content="Jekyll v4.0.0" />
+<meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="End-to-End Data Science Project with Adult Income Dataset" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="From understand the problem, to deliver the solution." />
@@ -16,26 +16,10 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-24T00:00:00-05:00" />
 <script type="application/ld+json">
-{"headline":"End-to-End Data Science Project with Adult Income Dataset","description":"From understand the problem, to deliver the solution.","datePublished":"2020-03-24T00:00:00-05:00","dateModified":"2020-03-24T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/machine%20learning/2020/03/24/End-to-End-Data-Science-Project-with-Adult-Income-Dataset.html"},"url":"https://johdev.com/machine%20learning/2020/03/24/End-to-End-Data-Science-Project-with-Adult-Income-Dataset.html","@context":"https://schema.org"}</script>
+{"description":"From understand the problem, to deliver the solution.","url":"https://johdev.com/machine%20learning/2020/03/24/End-to-End-Data-Science-Project-with-Adult-Income-Dataset.html","@type":"BlogPosting","headline":"End-to-End Data Science Project with Adult Income Dataset","dateModified":"2020-03-24T00:00:00-05:00","datePublished":"2020-03-24T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/machine%20learning/2020/03/24/End-to-End-Data-Science-Project-with-Adult-Income-Dataset.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>End-to-End Data Science Project with Adult Income Dataset | Johnny’s Machine Learning Blog</title>
-<meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="End-to-End Data Science Project with Adult Income Dataset" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="From understand the problem, to deliver the solution." />
-<meta property="og:description" content="From understand the problem, to deliver the solution." />
-<link rel="canonical" href="https://johdev.com/machine%20learning/2020/03/24/End-to-End-Data-Science-Project-with-Adult-Income-Dataset.html" />
-<meta property="og:url" content="https://johdev.com/machine%20learning/2020/03/24/End-to-End-Data-Science-Project-with-Adult-Income-Dataset.html" />
-<meta property="og:site_name" content="Johnny’s Machine Learning Blog" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-03-24T00:00:00-05:00" />
-<script type="application/ld+json">
-{"headline":"End-to-End Data Science Project with Adult Income Dataset","description":"From understand the problem, to deliver the solution.","datePublished":"2020-03-24T00:00:00-05:00","dateModified":"2020-03-24T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/machine%20learning/2020/03/24/End-to-End-Data-Science-Project-with-Adult-Income-Dataset.html"},"url":"https://johdev.com/machine%20learning/2020/03/24/End-to-End-Data-Science-Project-with-Adult-Income-Dataset.html","@context":"https://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
-
-<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
-<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" />
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
@@ -178,13 +162,6 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    
-
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -311,8 +288,7 @@ Or we can use scikit-learn <code>fetch_openml</code> to fetch it.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># import</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 
@@ -397,8 +373,7 @@ None
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># check the missing value</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Checking dataframe missing values:</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Checking dataframe missing values:</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">adult_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">adult_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">missingValue</span> <span class="o">=</span> <span class="n">adult_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -453,8 +428,7 @@ In this case, as the missing value fall into the <code>categorical</code> featur
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># check the label class and it's distribution percentage</span>
-<span class="n">label</span> <span class="o">=</span> <span class="n">adult_df</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">label</span> <span class="o">=</span> <span class="n">adult_df</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">counter</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">percentage</span> <span class="o">=</span> <span class="n">value</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
@@ -610,8 +584,7 @@ Class: &gt;50K, Count = 11687, Percentage = 23.9%.
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># use DataFrame `mode()` method</span>
-<span class="n">adult_df</span> <span class="o">=</span> <span class="n">adult_df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">adult_df</span><span class="o">.</span><span class="n">mode</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">adult_df</span> <span class="o">=</span> <span class="n">adult_df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">adult_df</span><span class="o">.</span><span class="n">mode</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">adult_df</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
 </pre></div>
 
@@ -673,8 +646,7 @@ None
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># checking the outliers</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">numerical_subset</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">numerical_subset</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -731,8 +703,7 @@ max     4356.000000       99.000000
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># check the quantity of this outlier</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"There's </span><span class="si">{</span><span class="n">adult_df</span><span class="p">[</span><span class="n">adult_df</span><span class="p">[</span><span class="s1">'capital-gain'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">99999</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> outlier in the capital-gain column"</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"There's </span><span class="si">{</span><span class="n">adult_df</span><span class="p">[</span><span class="n">adult_df</span><span class="p">[</span><span class="s1">'capital-gain'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">99999</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> outlier in the capital-gain column"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"There's </span><span class="si">{</span><span class="n">adult_df</span><span class="p">[</span><span class="n">adult_df</span><span class="p">[</span><span class="s1">'hours-per-week'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">99</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> outlier in the hours-per-week column"</span><span class="p">)</span>
 </pre></div>
 
@@ -765,8 +736,7 @@ There's 137 outlier in the hours-per-week column
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># replace it with mean value</span>
-<span class="n">adult_df</span><span class="p">[</span><span class="s1">'capital-gain'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">99999</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">adult_df</span><span class="p">[</span><span class="s1">'capital-gain'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">adult_df</span><span class="p">[</span><span class="s1">'capital-gain'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">99999</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">adult_df</span><span class="p">[</span><span class="s1">'capital-gain'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">adult_df</span><span class="p">[</span><span class="s1">'hours-per-week'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">99</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">adult_df</span><span class="p">[</span><span class="s1">'hours-per-week'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">adult_df</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
 </pre></div>
@@ -1241,8 +1211,7 @@ The shape of the target label is: 48842 dimensional vector.
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># filter unwanted warning</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">'ignore'</span><span class="p">)</span>
 </pre></div>
 
@@ -1260,8 +1229,7 @@ The shape of the target label is: 48842 dimensional vector.
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># evaluate each model in default parameters</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">)):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">)):</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"""</span>
 <span class="s2">    ********************************</span>
 <span class="s2">     Now evaluating </span><span class="si">{</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2"> model</span>
@@ -1349,9 +1317,7 @@ The Neural Network model average accuracy is: 85.00%, with Standard Deviation: 0
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># fine turn BaggingClassifier</span>
-
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
 
 <span class="n">BAGgrid</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'n_estimators'</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">]}</span>
 <span class="n">cv</span> <span class="o">=</span> <span class="n">RepeatedStratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1408,9 +1374,7 @@ The Neural Network model average accuracy is: 85.00%, with Standard Deviation: 0
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># fine turn GradientBoostingClassifier</span>
-
-<span class="n">GBMgrid</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'n_estimators'</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">]}</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">GBMgrid</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'n_estimators'</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">]}</span>
 <span class="n">GBMclf</span> <span class="o">=</span> <span class="n">GradientBoostingClassifier</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">min_samples_split</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> 
                                     <span class="n">max_depth</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="s1">'sqrt'</span><span class="p">,</span> <span class="n">subsample</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">GBMgrid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">GBMclf</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">GBMgrid</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
@@ -1530,8 +1494,7 @@ The Neural Network model average accuracy is: 85.00%, with Standard Deviation: 0
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># evaluate the testing subset</span>
-<span class="n">TestScore</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">TestScore</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The model test set accuracy is: </span><span class="si">{</span><span class="p">(</span><span class="n">TestScore</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%."</span><span class="p">)</span>
 </pre></div>
 
@@ -1563,8 +1526,7 @@ The Neural Network model average accuracy is: 85.00%, with Standard Deviation: 0
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># perform the Classification Report</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
 
 <span class="n">predicted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predicted</span><span class="p">))</span>
@@ -1606,8 +1568,7 @@ weighted avg       0.87      0.87      0.87     14653
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># to save the model</span>
-<span class="kn">import</span> <span class="nn">joblib</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">joblib</span>
 <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">'storage/final_model.sav'</span><span class="p">)</span>
 </pre></div>
 

@@ -3,9 +3,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>The map(), filter(), reduce(), zip() and Lambda() funcion in Python | Johnny’s Machine Learning Blog</title>
-<meta name="generator" content="Jekyll v4.0.0" />
+<meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="The map(), filter(), reduce(), zip() and Lambda() funcion in Python" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Some straightforward example to explain the function’s glegance" />
@@ -16,26 +16,10 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-06T00:00:00-06:00" />
 <script type="application/ld+json">
-{"headline":"The map(), filter(), reduce(), zip() and Lambda() funcion in Python","description":"Some straightforward example to explain the function’s glegance","datePublished":"2020-03-06T00:00:00-06:00","dateModified":"2020-03-06T00:00:00-06:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html"},"url":"https://johdev.com/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html","@context":"https://schema.org"}</script>
+{"description":"Some straightforward example to explain the function’s glegance","url":"https://johdev.com/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html","@type":"BlogPosting","headline":"The map(), filter(), reduce(), zip() and Lambda() funcion in Python","dateModified":"2020-03-06T00:00:00-06:00","datePublished":"2020-03-06T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>The map(), filter(), reduce(), zip() and Lambda() funcion in Python | Johnny’s Machine Learning Blog</title>
-<meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="The map(), filter(), reduce(), zip() and Lambda() funcion in Python" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="Some straightforward example to explain the function’s glegance" />
-<meta property="og:description" content="Some straightforward example to explain the function’s glegance" />
-<link rel="canonical" href="https://johdev.com/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html" />
-<meta property="og:url" content="https://johdev.com/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html" />
-<meta property="og:site_name" content="Johnny’s Machine Learning Blog" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-03-06T00:00:00-06:00" />
-<script type="application/ld+json">
-{"headline":"The map(), filter(), reduce(), zip() and Lambda() funcion in Python","description":"Some straightforward example to explain the function’s glegance","datePublished":"2020-03-06T00:00:00-06:00","dateModified":"2020-03-06T00:00:00-06:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html"},"url":"https://johdev.com/python/2020/03/06/The-map,-filter,-reduce,-zip-and-lambda-in-Python.html","@context":"https://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
-
-<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
-<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" />
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
@@ -167,13 +151,6 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    
-
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -486,8 +463,7 @@ Convert it into list: 72 bytes
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># list of strings</span>
-<span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Singapore'</span><span class="p">,</span> <span class="s1">'Guangzhou'</span><span class="p">,</span> <span class="s1">'Tokyo'</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Singapore'</span><span class="p">,</span> <span class="s1">'Guangzhou'</span><span class="p">,</span> <span class="s1">'Tokyo'</span><span class="p">]</span>
 
 <span class="c1"># convert every elements in the array into List</span>
 <span class="n">converted</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">words</span><span class="p">))</span>
@@ -633,8 +609,7 @@ The lenght of converted: 3
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># filter vowel</span>
-<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
     <span class="n">letters</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'e'</span><span class="p">,</span> <span class="s1">'i'</span><span class="p">,</span> <span class="s1">'o'</span><span class="p">,</span> <span class="s1">'u'</span><span class="p">]</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">variable</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">letters</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
@@ -685,8 +660,7 @@ The lenght of converted: 3
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># positive or negitive number</span>
-<span class="k">def</span> <span class="nf">positive</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">positive</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">True</span>
     <span class="k">else</span><span class="p">:</span>
@@ -852,9 +826,7 @@ The positive number is [1, 2, 5, 42].
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># cumulative product example</span>
-
-<span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">num1</span><span class="o">*</span><span class="n">num2</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The cumulative product of 1, 2, 3, 4 is: </span><span class="si">{</span><span class="n">reduce</span><span class="p">(</span><span class="n">multiply</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
@@ -888,8 +860,7 @@ The positive number is [1, 2, 5, 42].
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># more simple and elegent way with lambda</span>
-<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 
 <span class="n">result_multiply</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
 <span class="n">result_sum</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>

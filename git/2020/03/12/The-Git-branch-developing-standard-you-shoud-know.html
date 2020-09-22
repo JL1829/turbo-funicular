@@ -3,9 +3,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>The Git branches developing standard you should know | Johnny’s Machine Learning Blog</title>
-<meta name="generator" content="Jekyll v4.0.0" />
+<meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="The Git branches developing standard you should know" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Some example of Git branch develop standard coder should follow" />
@@ -16,26 +16,10 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-12T00:00:00-05:00" />
 <script type="application/ld+json">
-{"headline":"The Git branches developing standard you should know","description":"Some example of Git branch develop standard coder should follow","datePublished":"2020-03-12T00:00:00-05:00","dateModified":"2020-03-12T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html"},"url":"https://johdev.com/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html","@context":"https://schema.org"}</script>
+{"description":"Some example of Git branch develop standard coder should follow","url":"https://johdev.com/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html","@type":"BlogPosting","headline":"The Git branches developing standard you should know","dateModified":"2020-03-12T00:00:00-05:00","datePublished":"2020-03-12T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>The Git branches developing standard you should know | Johnny’s Machine Learning Blog</title>
-<meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="The Git branches developing standard you should know" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="Some example of Git branch develop standard coder should follow" />
-<meta property="og:description" content="Some example of Git branch develop standard coder should follow" />
-<link rel="canonical" href="https://johdev.com/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html" />
-<meta property="og:url" content="https://johdev.com/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html" />
-<meta property="og:site_name" content="Johnny’s Machine Learning Blog" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-03-12T00:00:00-05:00" />
-<script type="application/ld+json">
-{"headline":"The Git branches developing standard you should know","description":"Some example of Git branch develop standard coder should follow","datePublished":"2020-03-12T00:00:00-05:00","dateModified":"2020-03-12T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html"},"url":"https://johdev.com/git/2020/03/12/The-Git-branch-developing-standard-you-shoud-know.html","@context":"https://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
-
-<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
-<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" />
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
@@ -190,23 +174,23 @@ In this blog, we are going to talk about the following topic:</p>
 <a class="anchor" href="#master-branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Master Branch</h4>
 <ul>
   <li>
-<code class="highlighter-rouge">master</code> is the major branch, it’s also the production deployment branch, stablity is the uppermost important.</li>
-  <li>Normally <code class="highlighter-rouge">master</code> branch is merged by <code class="highlighter-rouge">develop</code> and <code class="highlighter-rouge">hotfix</code> branch, modfying code directly into the <code class="highlighter-rouge">master</code> branch is not allowed at all time.</li>
+<code class="language-plaintext highlighter-rouge">master</code> is the major branch, it’s also the production deployment branch, stablity is the uppermost important.</li>
+  <li>Normally <code class="language-plaintext highlighter-rouge">master</code> branch is merged by <code class="language-plaintext highlighter-rouge">develop</code> and <code class="language-plaintext highlighter-rouge">hotfix</code> branch, modfying code directly into the <code class="language-plaintext highlighter-rouge">master</code> branch is not allowed at all time.</li>
 </ul>
 
 <h4 id="develop-branch">
 <a class="anchor" href="#develop-branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Develop branch</h4>
 <ul>
   <li>
-<code class="highlighter-rouge">develop</code> branch is the branch for further developing, keep updated all the time and merging the code when bugs was fixed.</li>
-  <li>When developing some new feature, there will be a <code class="highlighter-rouge">feature</code> branch breakout from <code class="highlighter-rouge">develop</code> branch in order to provide a “clean” environment for new feature developing.</li>
+<code class="language-plaintext highlighter-rouge">develop</code> branch is the branch for further developing, keep updated all the time and merging the code when bugs was fixed.</li>
+  <li>When developing some new feature, there will be a <code class="language-plaintext highlighter-rouge">feature</code> branch breakout from <code class="language-plaintext highlighter-rouge">develop</code> branch in order to provide a “clean” environment for new feature developing.</li>
 </ul>
 
 <h4 id="feature-branch">
 <a class="anchor" href="#feature-branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature branch</h4>
 <ul>
-  <li>Based on <code class="highlighter-rouge">develop</code> branch, create <code class="highlighter-rouge">feature</code> branch</li>
-  <li>Naming: different features is named after the <code class="highlighter-rouge">feature/</code>, such as <code class="highlighter-rouge">feature/preprocessing_module</code>, <code class="highlighter-rouge">feature/unsupervised_module</code>
+  <li>Based on <code class="language-plaintext highlighter-rouge">develop</code> branch, create <code class="language-plaintext highlighter-rouge">feature</code> branch</li>
+  <li>Naming: different features is named after the <code class="language-plaintext highlighter-rouge">feature/</code>, such as <code class="language-plaintext highlighter-rouge">feature/preprocessing_module</code>, <code class="language-plaintext highlighter-rouge">feature/unsupervised_module</code>
 </li>
 </ul>
 
@@ -227,8 +211,8 @@ In this blog, we are going to talk about the following topic:</p>
 <h4 id="hotfix-branch">
 <a class="anchor" href="#hotfix-branch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hotfix branch</h4>
 <ul>
-  <li>Branch naming: Started with <code class="highlighter-rouge">hotfix/</code>, and its naming rules are similar to feature branches, it build for bug fixing.</li>
-  <li>When there’s emergency, the bug need to be fixed in time. Use the <code class="highlighter-rouge">master</code> branch as the baseline and create a <code class="highlighter-rouge">hotfix</code> branch. After the debug is completed, it need to be merged it into the <code class="highlighter-rouge">master</code> branch and <code class="highlighter-rouge">develop</code> branch.</li>
+  <li>Branch naming: Started with <code class="language-plaintext highlighter-rouge">hotfix/</code>, and its naming rules are similar to feature branches, it build for bug fixing.</li>
+  <li>When there’s emergency, the bug need to be fixed in time. Use the <code class="language-plaintext highlighter-rouge">master</code> branch as the baseline and create a <code class="language-plaintext highlighter-rouge">hotfix</code> branch. After the debug is completed, it need to be merged it into the <code class="language-plaintext highlighter-rouge">master</code> branch and <code class="language-plaintext highlighter-rouge">develop</code> branch.</li>
 </ul>
 
 <h3 id="routine-task">
@@ -294,7 +278,7 @@ In this blog, we are going to talk about the following topic:</p>
 
 <ul>
   <li>
-<strong>Type</strong>: what’s the type of this commit, is <code class="highlighter-rouge">bugfix</code> or <code class="highlighter-rouge">docs</code> or <code class="highlighter-rouge">style</code> etc.</li>
+<strong>Type</strong>: what’s the type of this commit, is <code class="language-plaintext highlighter-rouge">bugfix</code> or <code class="language-plaintext highlighter-rouge">docs</code> or <code class="language-plaintext highlighter-rouge">style</code> etc.</li>
   <li>
 <strong>Scope</strong>: the affecting range of this commit.</li>
   <li>
