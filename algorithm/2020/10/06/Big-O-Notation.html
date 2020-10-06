@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Some note of Big-O Notation | Johnny’s Machine Learning Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Some note of Big-O Notation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Some Algorithm basic that Data Scientist easy to skip." />
+<meta property="og:description" content="Some Algorithm basic that Data Scientist easy to skip." />
+<link rel="canonical" href="https://johdev.com/algorithm/2020/10/06/Big-O-Notation.html" />
+<meta property="og:url" content="https://johdev.com/algorithm/2020/10/06/Big-O-Notation.html" />
+<meta property="og:site_name" content="Johnny’s Machine Learning Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-10-06T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Some Algorithm basic that Data Scientist easy to skip.","url":"https://johdev.com/algorithm/2020/10/06/Big-O-Notation.html","@type":"BlogPosting","headline":"Some note of Big-O Notation","dateModified":"2020-10-06T00:00:00-05:00","datePublished":"2020-10-06T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://johdev.com/algorithm/2020/10/06/Big-O-Notation.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://johdev.com/feed.xml" title="Johnny's Machine Learning Blog" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Johnny&#39;s Machine Learning Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Some note of Big-O Notation</h1><p class="page-description">Some Algorithm basic that Data Scientist easy to skip.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-10-06T00:00:00-05:00" itemprop="datePublished">
+        Oct 6, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      7 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#Algorithm">Algorithm</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/JL1829/turbo-funicular/tree/master/_notebooks/2020-10-06-Big-O Notation.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/JL1829/turbo-funicular/master?filepath=_notebooks%2F2020-10-06-Big-O+Notation.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/JL1829/turbo-funicular/blob/master/_notebooks/2020-10-06-Big-O Notation.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#It-begins-with-a-story">It begins with a story </a></li>
+<li class="toc-entry toc-h1"><a href="#Introducing-the-Big-O-Notation">Introducing the Big-O Notation </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Common-Functions-for-Big-O:">Common Functions for Big-O: </a></li>
+<li class="toc-entry toc-h2"><a href="#Big-O-Notation-Rules:">Big-O Notation Rules: </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Rule-1:-Different-Steps-get-added">Rule 1: Different Steps get added </a></li>
+<li class="toc-entry toc-h3"><a href="#Rule-2:-Drop-Constants">Rule 2: Drop Constants </a></li>
+<li class="toc-entry toc-h3"><a href="#Rule-3:-Different-Inputs--->-Different-Variables">Rule 3: Different Inputs --&gt; Different Variables </a></li>
+<li class="toc-entry toc-h3"><a href="#Rule-4:-Drop-the-non-dominant-terms">Rule 4: Drop the non-dominant terms </a></li>
+<li class="toc-entry toc-h3"><a href="#Some-Exercises?">Some Exercises? </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-10-06-Big-O Notation.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="It-begins-with-a-story">
+<a class="anchor" href="#It-begins-with-a-story" aria-hidden="true"><span class="octicon octicon-link"></span></a>It begins with a story<a class="anchor-link" href="#It-begins-with-a-story"> </a>
+</h1>
+<hr>
+<p>I always recall that when I was kid, my math teacher love to ask a question:</p>
+<ul>
+<li>
+<strong>Who can tell me the answer of adding 1 to 100</strong>?</li>
+</ul>
+<p>Some student started to calculate: $1+2+3+4+5+6+7+......$.</p>
+<p>The one who always get No.1 in class tell the answer in a very short time: <strong>It's $5050$</strong></p>
+<p>Teacher ask: "How you do that?"</p>
+<p>He said: "Well, $1+100$ is $101$, and $2+99$ is $101$, there's total $50$ of $101$, so that answer is $50 \times 101$, which is $5050$.</p>
+<p>The smart boy definitely not me, I am the one who record this story, but it do inspire me the extended question: <strong>What if we are not adding 1 to 100, but adding 1 to <code>n</code>?</strong></p>
+<p>Let's solve this question by writing a function to sum from 1 to $n$. That's simple:</p>
+<p><strong>Python Solution 1</strong></p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">summation</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">i</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">summation</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">(</span><span class="n">array</span><span class="p">)</span> <span class="c1">#expected True</span>
+</pre></div>
+<p><strong>Python Solution 2</strong></p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">summation</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+
+<span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">summation</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">(</span><span class="n">array</span><span class="p">)</span> <span class="c1">#expected True</span>
+</pre></div>
+<p>Can you tell me which algorithm is better? and Why?</p>
+<p>Some will say: "I think the Solution 1 is better, because the <em>Zen of Python</em> said <em>Readability Count</em>, the <em>Solution 1</em> is very easy to understand at the first glance, you know what it's doing at the very begnning. "</p>
+<p>Some will say: "I think the Solution 2 is better, because it always one step to get the answer."</p>
+<p>Well, that's close, let's do the step by step analysis to compare this two solution:</p>
+<p><strong>Solution 1</strong>:</p>
+<p>Let's say the $n$ is $5$:</p>
+<ul>
+<li>Step 1: initialized <code>result = 0</code>
+</li>
+<li>Step 2: Start the loop from <code>i = 1</code>, then <code>result = 1 + 0 = 1</code>
+</li>
+<li>Step 2: In the Loop: now <code>i = 2</code>, execute: <code>result = 1 + 2 = 3</code>
+</li>
+<li>Step 3: In the Loop: now <code>i = 3</code>, execute: <code>result = 3 + 3 = 6</code>
+</li>
+<li>Step 4: In the Loop: now <code>i = 4</code>, execute: <code>result = 6 + 4 = 10</code>
+</li>
+<li>Step 5: In the Loop: now <code>i = 5</code>, execute: <code>result = 10 + 5 = 15</code>
+</li>
+<li>Step 6: return the <code>result</code> value. </li>
+</ul>
+<p><strong>Solution 2</strong>:</p>
+<p>Let's say the $n$ is $5$:</p>
+<ul>
+<li>Step 1: return the value: $\frac{5 \times (5 + 1)}{2} = 15$</li>
+</ul>
+<p>Ok, in the first solution, the <em>Steps</em> will grows when the $n$ grows, let's say the $n$ is millions, then the function need to execuate millions time to get the answer. In contrast, no matter how big is the $n$, in the second solution, there will be always one time execuation to get the answers, so no matter in a slower computer, or a super fast computer, <strong>Solution 2</strong> will be always faster than the <strong>Solution 1</strong></p>
+<p>Above analysis it just qualitative, what science need is precise, so what's the quantitative analysis for it to precisely identify and analyse the algorithm?</p>
+<h1 id="Introducing-the-Big-O-Notation">
+<a class="anchor" href="#Introducing-the-Big-O-Notation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introducing the Big-O Notation<a class="anchor-link" href="#Introducing-the-Big-O-Notation"> </a>
+</h1>
+<hr>
+<p>When trying to characterize an algorithm’s efficiency in terms of execution time, independent of any particular program or computer, it is important to quantify the number of operations or steps that the algorithm will require. If each of these steps is considered to be a basic unit of computation, then the execution time for an algorithm can be expressed as the number of steps required to solve the problem. Deciding on an appropriate basic unit of computation can be a complicated problem and will depend on how the algorithm is implemented.</p>
+<p>In the summation functions given above, it makes sense to use the number of terms in the summation to denote the size of the problem. We can then say that the sum of the first 100,000 integers is a bigger instance of the summation problem than the sum of the first 1,000. Because of this, it might seem reasonable that the time required to solve the larger case would be greater than for the smaller case. Our goal then is to show how the algorithm’s execution time changes with respect to the size of the problem.</p>
+<p>Computer scientists prefer to take this analysis technique one step further. It turns out that the exact number of operations is not as important as determining the most dominant part of the $T(n)$ function. In other words, as the problem gets larger, some portion of the $T(n)$ function tends to overpower the rest. This dominant term is what, in the end, is used for comparison. The <strong>Order of Magnitude</strong> function describes the part of $T(n)$ that increases the fastest as the value of $n$ increases. Order of magnitude is often called <strong>Big-O</strong> Notation(for <strong>Order</strong>) and written as $O(f(n))$. It provides a useful approximation to the actual number of steps in the computation. The function $f(n)$ rovides a simple representation of the dominant part of the original $T(n)$.</p>
+<h2 id="Common-Functions-for-Big-O:">
+<a class="anchor" href="#Common-Functions-for-Big-O:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Common Functions for Big-O:<a class="anchor-link" href="#Common-Functions-for-Big-O:"> </a>
+</h2>
+<hr>
+<p>$n$ --&gt; The size of the input</p>
+<ul>
+<li>Constant runtime(Time Complexity): $O(1)$</li>
+<li>Logarithmic runtime(Time Complexity): $O(\log (n))$</li>
+<li>Linear runtime(Time Complexity): $O(n)$</li>
+<li>LinearLogarithmic runtime(Time Complexity): $O(n\log (n))$</li>
+<li>Quadric runtime(Time Complexity): $O(n^2)$</li>
+<li>Cubic runtime(Time Complexity): $O(n^3)$</li>
+<li>Exponential runtime(Time Complexity): $O(b^n), b &gt; 1$</li>
+<li>Factorial runtime(Time Complexity): $O(n!)$</li>
+</ul>
+<p>If we plot the graph of each run time: 
+<img src="https://runestone.academy/runestone/books/published/pythonds3/_images/newplot.png" alt="img"></p>
+<p>So if we visit back our begins story. What do you think the <em>Time Complexity</em> of <strong>Solution 1</strong> and <strong>Solution 2</strong>? Comment below.</p>
+<h2 id="Big-O-Notation-Rules:">
+<a class="anchor" href="#Big-O-Notation-Rules:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Big-O Notation Rules:<a class="anchor-link" href="#Big-O-Notation-Rules:"> </a>
+</h2>
+<hr>
+<h3 id="Rule-1:-Different-Steps-get-added">
+<a class="anchor" href="#Rule-1:-Different-Steps-get-added" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Rule 1: Different Steps get added</strong><a class="anchor-link" href="#Rule-1:-Different-Steps-get-added"> </a>
+</h3>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">doSomething</span><span class="p">():</span>
+    <span class="n">doStep</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1">#O(a)</span>
+    <span class="n">doStep</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="c1">#O(b)</span>
+
+    <span class="k">return</span>
+</pre></div>
+<p>So for the above example, the Time Complexity should be: $O(a+b)$</p>
+<hr>
+<h3 id="Rule-2:-Drop-Constants">
+<a class="anchor" href="#Rule-2:-Drop-Constants" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Rule 2: Drop Constants</strong><a class="anchor-link" href="#Rule-2:-Drop-Constants"> </a>
+</h3>
+<p><strong>Example</strong></p>
+<p><strong>One</strong></p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">minMax</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="n">minimum</span><span class="p">,</span> <span class="n">maximum</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
+        <span class="n">minimum</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">minimum</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
+        <span class="n">maximum</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">maximum</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">minimun</span><span class="p">,</span> <span class="n">maximum</span>
+</pre></div>
+<p><strong>Two</strong></p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">minMax</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="n">minimum</span><span class="p">,</span> <span class="n">maximum</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
+        <span class="n">minimum</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">minimum</span><span class="p">)</span>
+        <span class="n">maximum</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">maximum</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">minimum</span><span class="p">,</span> <span class="n">maximum</span>
+</pre></div>
+<p>The above TWO functions do the same thing, return the <code>min</code> and <code>max</code> value from an <code>array</code>, but the <strong>One</strong> is first find the <code>min</code>, and then find the <code>max</code>, so the actual steps is <code>2n</code>, while the <strong>Two</strong> is finding the <code>min</code>, <code>max</code> concurrently, so the actual steps is <code>n</code>.</p>
+<p>You may say the <strong>One</strong> time complexity is <code>O(2n)</code> and <strong>Two</strong> time complexity is <code>O(n)</code>, the actual answer is both of them time complexity is <code>O(n)</code>, because when the <code>n</code> approach to <code>inf</code>, the constant <code>2</code> will be less significant till can be ignored, so this is the <strong>Rule 2: Drop the constant</strong></p>
+<hr>
+<h3 id="Rule-3:-Different-Inputs---&gt;-Different-Variables">
+<a class="anchor" href="#Rule-3:-Different-Inputs---&gt;-Different-Variables" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Rule 3: Different Inputs --&gt; Different Variables</strong><a class="anchor-link" href="#Rule-3:-Different-Inputs---&gt;-Different-Variables"> </a>
+</h3>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">intersectionSize</span><span class="p">(</span><span class="n">arrayA</span><span class="p">,</span> <span class="n">arrayB</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">arrayA</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">arrayB</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">count</span>
+</pre></div>
+<p>Well, this function have <code>loop</code> in the <code>loop</code>, we can easily identify it as $O(n^2)$ of time complexity, but actually is False, let's ask a simple question, what is the <code>n</code> means? well, we may say <code>n</code> is the input size of the array, ok, then which array? <code>arrayA</code> or <code>arrayB</code>? since this is different variables, and the <code>n</code> repersent different variable input size, here we should describe the time complexity as:</p>
+<ul>
+<li>$O(a \times b)$</li>
+</ul>
+<hr>
+<h3 id="Rule-4:-Drop-the-non-dominant-terms">
+<a class="anchor" href="#Rule-4:-Drop-the-non-dominant-terms" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Rule 4: Drop the non-dominant terms</strong><a class="anchor-link" href="#Rule-4:-Drop-the-non-dominant-terms"> </a>
+</h3>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">IdontKnowWhatIamDoing</span><span class="p">(</span><span class="n">array</span><span class="p">:</span><span class="nb">list</span><span class="p">):</span>
+    <span class="n">maximun</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># O(n) Time complexity</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
+        <span class="n">maximun</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">maximum</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">maximum</span><span class="p">)</span>
+
+    <span class="c1"># O(n^2) Time complexity</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+<p>We can see from above function <code>IdontKnowWhatIamDoing</code>, the 1st part's time complexity is $O(n)$, and the 2nd parts' time complexity is $O(n^2)$, does it mean the total time complexity is $O(n + n^2)$?</p>
+<p>Well, let's do some simulation:</p>
+<ul>
+<li>if <code>n = 1</code>, there's $O(1 + 1^2 = 2)$</li>
+<li>if <code>n = 2</code>, there's $O(2 + 2^2 = 5)$</li>
+<li>if <code>n = 10</code>, there's $O(10 + 10^2 = 110)$</li>
+<li>if <code>n = 10,000</code>, there's $O(10,000 + 10,000^2 = ???)$</li>
+<li>if <code>n = 100,000</code>, there's $O(100,000 + 100,000^2)$</li>
+</ul>
+<p>What pattern do you found? when the <code>n</code> grows, the $n^2$ have more dominance, and the $n$ part become less significant, in the Big-O Notation, we are not doing the details computation, Big-O notation is the unified way to describe an algroithm's time complexity and space complexity(may discuss next post), so we just need to know the donimant term that impact the run time the most. so here we drop the non-dominant term, the time complexity is:</p>
+<ul>
+<li>$O(n^2)$</li>
+</ul>
+<hr>
+<h3 id="Some-Exercises?">
+<a class="anchor" href="#Some-Exercises?" aria-hidden="true"><span class="octicon octicon-link"></span></a>Some Exercises?<a class="anchor-link" href="#Some-Exercises?"> </a>
+</h3>
+<p>We have finished the Rules of Big-O Notation, how about a small exercises? it can be solved based on the info above: 
+<img src="https://github.com/JL1829/turbo-funicular/raw/master/images/Screenshot%202020-10-06%20at%2016.49.15.png" alt="pic"></p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="JL1829/turbo-funicular"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/algorithm/2020/10/06/Big-O-Notation.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/JL1829" title="JL1829"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/JALC1829" title="JALC1829"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
