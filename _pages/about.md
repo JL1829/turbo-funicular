@@ -51,7 +51,7 @@ class README(object):
             ### Hi there ~~
             """
 
-me = README(2020)
+me = README(username='JL1829', year=2020)
 ```
 
 
@@ -101,7 +101,7 @@ me = README(2020)
 
 ## Education Background
 
-### National University of Singapore
+### [National University of Singapore](https://en.wikipedia.org/wiki/National_University_of_Singapore)
 > Master of Science - MS, Technology & Intelligent System
 * Machine Reasoning
 * Reasoning Systems
@@ -117,7 +117,7 @@ me = README(2020)
 * Spatial Reasoning from Sensor Data
 * Real Time Audio-Visual Sensing and Sense Making
 
-### Royal Holloway, University of London
+### [Royal Holloway, University of London](https://en.wikipedia.org/wiki/Royal_Holloway,_University_of_London)
 > Bachelor of Science (B.S.), Marketing/Marketing Management, General
 * MN2041K Managerial Accounting
 * MN2061K Marketing Management
