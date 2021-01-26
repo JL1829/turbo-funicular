@@ -5,26 +5,27 @@ permalink: /about/
 ---
 
 ```python
-class README(object):
+class README:
     """Doc String PlaceHolder"""
 
-    def __init__(self, username='JL1829', year=2020):
+    def __init__(self, username='JL1829', year=2021):
         self.username = username
         self.FullName = 'Johnny(ZHIPING) Lu'
         self.education = {
-            'Machine Learning': ['Machine Learning', 'Stanford Online',
-                                 'Deep Learning', 'Coursera',
-                                 'Mathematic for Machine Learning', 'Imperial College London'],
-            'Master': ['MSc of Technology and Intelligent System', 'NUS'], 
+            'Machine Learning': {'Standford University': 'Machine Learning',
+                                 'Coursera': 'Deep Learning',
+                                 'Coursera': 'TensorFlow Certified Engineer'
+                                 'Imperial College London': 'Mathematic for Machine Learning'},
+            'Master': ['MSc of Technology and Intelligent System', 'National University of Singapore'], 
         }
     
-    def doing(self, now=2020):
+    def doing(self, now=2021):
         today = self.year
         
         if now == today:
-            experience = self.employment['Lead Consulting Engineer']
+            experience = self.employment['Machine Learning Developer']
             return """
-            I am a Lead Consulting Engineer for Machine Learning and Data Science, current
+            I am a Machine Learning Developer, current
             working project:
              - Customer purchase value prediction
              - Customer sentimental anaylser for review
@@ -51,15 +52,15 @@ class README(object):
             ### Hi there ~~
             """
 
-me = README(username='JL1829', year=2020)
+me = README(2021)
 ```
 
 
 ## Experiences
 
 ### Allied Telesis
-- **Lead Consulting Engineerr**, (Machine Learning, Data Science).
-*Singapore, Jun/2017 -- Current*
+- **Technical Consultant**, (Machine Learning, Data Science).
+*Singapore, Jun/2017 -- Dec/2020*
 
     - Leading Data Science and System Engineer team to develop products that measurably and efficiently improve sales and top-line growth.
     - Interfacing with customers to receive valuable product feedback.
