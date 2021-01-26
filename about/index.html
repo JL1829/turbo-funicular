@@ -89,26 +89,27 @@ window.onload = wrap_img;
   </header>
 
   <div class="post-content">
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">README</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">README</span><span class="p">:</span>
     <span class="s">"""Doc String PlaceHolder"""</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">'JL1829'</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2020</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">'JL1829'</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2021</span><span class="p">):</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">FullName</span> <span class="o">=</span> <span class="s">'Johnny(ZHIPING) Lu'</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">education</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s">'Machine Learning'</span><span class="p">:</span> <span class="p">[</span><span class="s">'Machine Learning'</span><span class="p">,</span> <span class="s">'Stanford Online'</span><span class="p">,</span>
-                                 <span class="s">'Deep Learning'</span><span class="p">,</span> <span class="s">'Coursera'</span><span class="p">,</span>
-                                 <span class="s">'Mathematic for Machine Learning'</span><span class="p">,</span> <span class="s">'Imperial College London'</span><span class="p">],</span>
-            <span class="s">'Master'</span><span class="p">:</span> <span class="p">[</span><span class="s">'MSc of Technology and Intelligent System'</span><span class="p">,</span> <span class="s">'NUS'</span><span class="p">],</span> 
+            <span class="s">'Machine Learning'</span><span class="p">:</span> <span class="p">{</span><span class="s">'Standford University'</span><span class="p">:</span> <span class="s">'Machine Learning'</span><span class="p">,</span>
+                                 <span class="s">'Coursera'</span><span class="p">:</span> <span class="s">'Deep Learning'</span><span class="p">,</span>
+                                 <span class="s">'Coursera'</span><span class="p">:</span> <span class="s">'TensorFlow Certified Engineer'</span>
+                                 <span class="s">'Imperial College London'</span><span class="p">:</span> <span class="s">'Mathematic for Machine Learning'</span><span class="p">},</span>
+            <span class="s">'Master'</span><span class="p">:</span> <span class="p">[</span><span class="s">'MSc of Technology and Intelligent System'</span><span class="p">,</span> <span class="s">'National University of Singapore'</span><span class="p">],</span> 
         <span class="p">}</span>
     
-    <span class="k">def</span> <span class="nf">doing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">now</span><span class="o">=</span><span class="mi">2020</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">doing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">now</span><span class="o">=</span><span class="mi">2021</span><span class="p">):</span>
         <span class="n">today</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">year</span>
         
         <span class="k">if</span> <span class="n">now</span> <span class="o">==</span> <span class="n">today</span><span class="p">:</span>
-            <span class="n">experience</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">employment</span><span class="p">[</span><span class="s">'Lead Consulting Engineer'</span><span class="p">]</span>
+            <span class="n">experience</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">employment</span><span class="p">[</span><span class="s">'Machine Learning Developer'</span><span class="p">]</span>
             <span class="k">return</span> <span class="s">"""
-            I am a Lead Consulting Engineer for Machine Learning and Data Science, current
+            I am a Machine Learning Developer, current
             working project:
              - Customer purchase value prediction
              - Customer sentimental anaylser for review
@@ -135,7 +136,7 @@ window.onload = wrap_img;
             ### Hi there ~~
             """</span>
 
-<span class="n">me</span> <span class="o">=</span> <span class="n">README</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">'JL1829'</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2020</span><span class="p">)</span>
+<span class="n">me</span> <span class="o">=</span> <span class="n">README</span><span class="p">(</span><span class="mi">2021</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h2 id="experiences">Experiences</h2>
@@ -143,8 +144,8 @@ window.onload = wrap_img;
 <h3 id="allied-telesis">Allied Telesis</h3>
 <ul>
   <li>
-    <p><strong>Lead Consulting Engineerr</strong>, (Machine Learning, Data Science).
-<em>Singapore, Jun/2017 – Current</em></p>
+    <p><strong>Technical Consultant</strong>, (Machine Learning, Data Science).
+<em>Singapore, Jun/2017 – Dec/2020</em></p>
 
     <ul>
       <li>Leading Data Science and System Engineer team to develop products that measurably and efficiently improve sales and top-line growth.</li>
