@@ -116,7 +116,6 @@ me = README(username='JL1829', year=2020)
 * Vision Systems
 * Spatial Reasoning from Sensor Data
 * Real Time Audio-Visual Sensing and Sense Making
-* Others
 
 ### [Royal Holloway, University of London](https://en.wikipedia.org/wiki/Royal_Holloway,_University_of_London)
 > Bachelor of Science (B.S.), Marketing/Marketing Management, General
